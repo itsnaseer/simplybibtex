@@ -24,10 +24,8 @@ class View {
 
 		$fallbacks = array('url'=> NULL
 		);
-
-
 		
-		$content = (!$id) ? $database->render_all($templates['content'],$encode,NULL) : $database->render_id($templates['content'],$encode,$id);
+		$content = ($id == -1) ? $database->render_all($templates['content'],$encode,NULL) : $database->render_id($templates['content'],$encode,$id);
 
 		$templates['viewer']->set("content",$content);
 		$templates['viewer']->set("title",$title);

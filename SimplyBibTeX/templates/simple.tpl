@@ -1,12 +1,15 @@
 <div class="<?=$oddeven?> item">
 
-	<div onclick="javascript:toggle('notes_<?=$number?>');" title="Click to know more about <?=$title?>" style="float:right;border:1px dotted #e00;background-color:#d00;color:white;padding:0.1em;" >&nbsp;&nbsp;</div>
+	<div onclick="javascript:toggle('notes_<?=$number?>');" title="Click to know more about <?=$title?>" style="float:right"><img src="templates/images/toggle.gif" width="16" height="16" /></div>
 	
 	<?=$author?>, (<?=$year?>) <i><?=$title?>, <?=$journal?></i>
-
 	<div id="notes_<?=$number?>" class="hidden">
 
 		<div class="item_extended">
+			<b>Author:</b>&nbsp;<?=$author?>
+			<br/>
+			<b>Title:</b>&nbsp;<?=$title?>
+			<br/>
 			<b>Abstract:</b>&nbsp;<?=$abstract?>
 			<br/>
 			<b>Pages:</b>&nbsp;<?=$pages?>
@@ -21,8 +24,14 @@
 			<br/>
 		</div>
 		<div class="item_menu">
-			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a>
+			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | <span onclick="javascript:toggle('comments_<?=$number?>')">Comment</span>
 		</div>
+		<div id="comments_<?=$number?>" class="hidden">
+			<div class="comment">
+			Not yet implemented!
+			</div>
+		</div>
+		
 
 	</div>
 </div>
