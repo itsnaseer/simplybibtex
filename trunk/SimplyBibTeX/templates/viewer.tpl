@@ -87,7 +87,7 @@
 			</div>
 			<?=$content?>
 			<div id="footer">
-				<a href="<?=$rss2?>">RSS</a> | <![CDATA[<a href="<?=$atom?>">Atom</a> |]]> SimplyBibTeX &copy; Copyrights 2005, Hartmut Seichter | <?=$time?>
+				<a href="<?=$rss2?>">RSS</a> | <a href="<?=$atom?>">Atom</a> | SimplyBibTeX &copy; Copyrights 2005, Hartmut Seichter | <?=$time?>
 			</div>
 		</div>
 	</body>

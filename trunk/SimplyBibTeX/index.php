@@ -28,7 +28,7 @@ function get_file_form($directory,$current)
 			if ($file != "." && $file != ".." && $file != "CVS") {
 
 				$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
-				$menu .= '<option value="' . $file . '" ' . $sel_html . '>' . $file.'</option>'; 
+				$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file.'</option>'; 
 				
 			};
 		} // while
@@ -83,9 +83,9 @@ if (!$feed)
 
 	if (!$file) 
 		$file = 'bibs/example.bib';
-	else 
-		$file = 'bibs/' . stripslashes($file);
 
+	$file = stripslashes($file);
+	
 
 	$bib = new BibTeX($file);
 	$bib->parse();
@@ -132,6 +132,7 @@ if (!$feed)
 	};
 	$templates[viewer]->set('baselink',get_link($file));
 	$templates[content]->set('link',get_link($file));
+	$templates[content]->set('db',$file);
 
 	$templates[viewer]->set('time',date("r", time())); 
 	$templates[viewer]->set('dbtime',date("r", filemtime($file))); 
