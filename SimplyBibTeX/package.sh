@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -rf SimplyBibTeX
-cvs -d:pserver:seichter@technotecturecvs.ath.cx:/home/seichter/cvshome export -f -D now SimplyBibTeX
+cvs -d:pserver:seichter@technotecturecvs.ath.cx:/home/seichter/cvshome export -r HEAD SimplyBibTeX
 
 rm -f SimplyBibTeX/*.sh
 
