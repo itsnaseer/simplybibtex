@@ -9,35 +9,35 @@
 // License			: GPL
 // CVS				: $Id$
 // ---------------------------------------------------------------------------
-    class Template
-    {
-        var $filename;
-        var $content;
-        var $output;
+class Template {
         
-        function Template($file)
-        {
-			$this->filename = $file;
-        }
-
-        function set($name, $value)
-        {
-            $this->content[$name] = $value;
-        }
-
-        function make()
-        {
-            extract($this->content);
-            ob_start();
-            require($this->filename);
-            $this->output = ob_get_contents();
-            ob_end_clean();    
-        }    
-	
-		function run()
-		{
-			$this->make();
-			echo $this->output;
-		}    
+	var $filename;
+    var $content;
+    var $output;
+    
+    function Template($file)
+    {
+		$this->filename = $file;
     }
-?> 
+
+    function set($name, $value)
+    {
+        $this->content[$name] = $value;
+    }
+
+    function make()
+    {
+        extract($this->content);
+        ob_start();
+        @include($this->filename);
+        $this->output = ob_get_contents();
+        ob_end_clean();    
+    }    
+
+	function run()
+	{
+		$this->make();
+		echo $this->output;
+	}    
+}
+?>
