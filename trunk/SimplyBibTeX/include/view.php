@@ -22,19 +22,19 @@ class View {
 
 		$encode = TRUE;
 
-		$fallbacks = array('url'=>$link
+		$fallbacks = array('url'=> NULL
 		);
 
 
 		
-		$content = (!$id) ? $database->render_all($templates[content],$encode,$NULL) : $database->render_id($templates[content],$encode,$id);
+		$content = (!$id) ? $database->render_all($templates['content'],$encode,NULL) : $database->render_id($templates['content'],$encode,$id);
 
-		$templates[viewer]->set("content",$content);
-		$templates[viewer]->set("title",$title);
+		$templates['viewer']->set("content",$content);
+		$templates['viewer']->set("title",$title);
 
-		$templates[viewer]->make();
+		$templates['viewer']->make();
 
-		return $templates[viewer]->output;
+		return $templates['viewer']->output;
 	}
 
 	function get_rss($title, $database, $templates, $link)
@@ -45,15 +45,15 @@ class View {
 
 		$encode = TRUE;
 
-		$content = $database->render_all($templates[content],$encode,$fallbacks);
+		$content = $database->render_all($templates['content'],$encode,$fallbacks);
 
-		$templates[viewer]->set("content",$content);
-		$templates[viewer]->set("title",$title);
-		$templates[viewer]->set("link",$link);
+		$templates['viewer']->set("content",$content);
+		$templates['viewer']->set("title",$title);
+		$templates['viewer']->set("link",$link);
 
-		$templates[viewer]->make();
+		$templates['viewer']->make();
 
-		return $templates[viewer]->output;
+		return $templates['viewer']->output;
 	}
 }
 
