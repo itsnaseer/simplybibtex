@@ -17,7 +17,7 @@ class View {
 	function View() {}
 
 
-	function get_html($title, $database, $templates, $id)
+	function get_html($title, $database, $templates, $id, $search)
 	{
 	
 		$trans = get_html_translation_table(HTML_ENTITIES);
@@ -27,8 +27,15 @@ class View {
 
 		$fallbacks = array('url'=> NULL
 		);
+
+		if (!$search)
+		{
+			$content = ($id == -1) ? $database->render_all($templates['content'],$encode,NULL,$trans) : 
+				$database->render_id($templates['content'],$encode,$id,$trans);
+		} else {
+			$content = $database->render_search($templates['content'],$encode,$trans,$search);
 		
-		$content = ($id == -1) ? $database->render_all($templates['content'],$encode,NULL) : $database->render_id($templates['content'],$encode,$id,$trans);
+		}
 
 		$templates['viewer']->set("content",$content);
 		$templates['viewer']->set("title",$title);
