@@ -21,8 +21,6 @@ class BibTeX
 	var $types;
 	var $filename;
 
-	var $pagefrom, $pageto;
-
 	function BibTeX($file) {
 		$this->items = array(
 			'note' => array(),
@@ -43,7 +41,9 @@ class BibTeX
 			'title' => array(),
 			'booktitle' => array(),
 			'folder' => array(),
-			'type' => array());
+			'type' => array(),
+			'linebegin' => array(),
+			'lineend' => array());
 		
 		$this->filename = $file;
 	}
@@ -63,15 +63,19 @@ function parse() {
 	
 	foreach($lines as $line) {
 	
-		$lineindex++;
+		$this->items['lineend'][$this->count] = $lineindex; 
+		
+		
+		$lineindex++;	
+		
 		
 		$line = trim($line);
 
-		$raw_line = $line + '\n';
+		$raw_line = $line + '\n';		
 		
 		$line=str_replace("'","`",$line);
 		$seg=str_replace("\"","`",$line);
-		
+				
 		$ps=strpos($seg,'=');
 
 		$segtest=strtolower($seg);
@@ -89,8 +93,9 @@ function parse() {
 		if (!strlen($seg)) continue;
 		
 		if ("@" == $seg[0]) {
+		
             $this->count++;
-			$this->items['raw'][$this->count] = $line; 
+			$this->items['raw'][$this->count] = $line . "\r\n"; 
 
             $ps=strpos($seg,'@');	
             $pe=strpos($seg,'{');
@@ -98,9 +103,14 @@ function parse() {
             $this->types[$this->count]=trim(substr($seg, 1,$pe-1));
 
             $fieldcount=-1; 
+            
+            $this->items['linebegin'][$this->count] = $lineindex;
+            
+            
         } // #of item increase
         elseif ($ps!==false ) { // one field begins
-				$this->items['raw'][$this->count] .= $line; 
+        
+				$this->items['raw'][$this->count] .= $line . "\r\n"; 
 
                 $ps=strpos($seg,'=');
 
@@ -130,7 +140,7 @@ function parse() {
 				}
 
 			} else {
-
+				$this->items['raw'][$this->count] .= $line . "\r\n"; 
 				$pe=strpos($seg,'},');
 				
 				if ($fieldcount > -1) {
@@ -151,7 +161,11 @@ function parse() {
 				$v=str_replace('}','',$v);	
 				$v=str_replace(',',' ',$v);	
 				$v=str_replace('\'',' ',$v);	
-				$v=str_replace('\"',' ',$v);	
+				$v=str_replace('\"',' ',$v);
+				
+				// test!
+				$v=str_replace('`',' ',$v);
+					
 				$v=trim($v);
 				
 				$this->items["$var[$fieldcount]"][$this->count]="$v";
@@ -166,51 +180,6 @@ function parse() {
 		$template->set($name,(isset($this->items[$name][$id])? ($encode) ? strtr($this->items[$name][$id],$trans) : $this->items[$name][$id] : $default));
 
 	}
-
-	function render_all($template,$encode,$fallbacks)
-	{
-		$trans = get_html_translation_table(HTML_ENTITIES);
-		$output = NULL;
-		
-		for ($i = 0; $i <= $this->count; $i++)
-		{
-			if (!isset($this->items['raw'][$i])) continue;
-			
-			// fill the template engine with the respective values
-			$template->set("type",$this->types[$i]);
-			
-			if ($i % 2) 
-				$template->set("oddeven","odd");
-			else
-				$template->set("oddeven","even");
-
-			$template->set("number",$i);
-
-			$this->set($template,'journal',		$i,"",$encode,$trans);
-			$this->set($template,'booktitle',	$i,"",$encode,$trans);
-			$this->set($template,'author',		$i,"",$encode,$trans);
-			$this->set($template,'volume',		$i,"",$encode,$trans);
-			$this->set($template,'chapter',		$i,"",$encode,$trans);
-			$this->set($template,'url',			$i,$fallbacks['url'],$encode,$trans);
-			$this->set($template,'note',		$i,"",$encode,$trans);
-			$this->set($template,'abstract',	$i,"",$encode,$trans);
-			$this->set($template,'year',		$i,"",$encode,$trans);
-			$this->set($template,'folder',		$i,"",$encode,$trans);
-			$this->set($template,'publisher',	$i,"",$encode,$trans);
-			$this->set($template,'page-start',	$i,"",$encode,$trans);
-			$this->set($template,'page-end',	$i,"",$encode,$trans);
-			$this->set($template,'pages',		$i,"",$encode,$trans);
-			$this->set($template,'address',		$i,"",$encode,$trans);
-			$this->set($template,'raw',			$i,"",$encode,$trans);
-			$this->set($template,'title',		$i,"",$encode,$trans);
-
-			$template->make();
-
-			$output .= $template->output;
-		}
-		return $output;
-	}
-
 	function render_id($template,$encode,$id)
 	{
 		$output = NULL;
@@ -224,7 +193,7 @@ function parse() {
 			$template->set("oddeven","odd");
 		else
 			$template->set("oddeven","even");
-
+		
 		$template->set("number",$id);
 
 		$this->set($template,'journal',		$id,"",$encode,$trans);
@@ -232,7 +201,6 @@ function parse() {
 		$this->set($template,'author',		$id,"",$encode,$trans);
 		$this->set($template,'volume',		$id,"",$encode,$trans);
 		$this->set($template,'chapter',		$id,"",$encode,$trans);
-		$this->set($template,'url',			$id,"",$encode,$trans);
 		$this->set($template,'note',		$id,"",$encode,$trans);
 		$this->set($template,'abstract',	$id,"",$encode,$trans);
 		$this->set($template,'year',		$id,"",$encode,$trans);
@@ -242,12 +210,31 @@ function parse() {
 		$this->set($template,'page-end',	$id,"",$encode,$trans);
 		$this->set($template,'pages',		$id,"",$encode,$trans);
 		$this->set($template,'address',		$id,"",$encode,$trans);
-		$this->set($template,'raw',			$id,"",$encode,$trans);
+		$this->set($template,'raw',			$id,"",$encode,$trans);		
+		$this->set($template,'url',			$id,"",$encode,$trans);
+		$this->set($template,'title',		$id,"",$encode,$trans);
+		$this->set($template,'linebegin',	$id,"",$encode,$trans);
+		$this->set($template,'lineend',		$id,"",$encode,$trans);
 
 		$template->make();
 
 		$output .= $template->output;
 
+		return $output;
+	}
+
+
+	function render_all($template,$encode,$fallbacks)
+	{	
+		$trans = get_html_translation_table(HTML_ENTITIES);
+		$output = NULL;
+		
+		for ($i = 0; $i <= $this->count; $i++)
+		{
+			
+			$output .= $this->render_id($template,$encode,$i);
+			
+		}
 		return $output;
 	}
 }

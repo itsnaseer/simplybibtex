@@ -84,13 +84,12 @@ function get_meta($file) {
 	return $meta;
 }
 
-/* generate an upload form */
+/* generate an meta information form */
 function get_meta_form($file)
 {
-
 	$form  = '<form action="include/commit.php" method="post">';
 	$form .= '<textarea rows="20" cols="60" name="meta">' . get_meta($file) . '</textarea>';
-	$form .= '<input type="hidden" name="command" value="refresh_meta"/><br />';
+	$form .= '<input type="hidden" name="command" value="add_item"/><br />';
 	$form .= '<input type="hidden" name="db" value="' . $file . '"/>';
 	$form .= '<input type="submit" value="commit" />';
 	$form .= '<input type="reset" value="reset" />';
@@ -98,6 +97,22 @@ function get_meta_form($file)
 	
 	return $form;
 }
+
+/* generate an upload form */
+function get_item_form($file)
+{
+
+	$form  = '<form action="include/commit.php" method="post">';
+	$form .= '<textarea rows="20" cols="60" name="item"></textarea>';
+	$form .= '<input type="hidden" name="command" value="add_item"/><br />';
+	$form .= '<input type="hidden" name="db" value="' . $file . '"/>';
+	$form .= '<input type="submit" value="commit" />';
+	$form .= '<input type="reset" value="reset" />';
+	$form .= '</form>';
+	
+	return $form;
+}
+
 
 
 /* return the help file */
@@ -173,7 +188,7 @@ $output = '';
 
 $file = get_post('db',NULL);
 
-if ($file == NULL)
+if (!$file)
 	$file = get_get('db',$cfg['database']);
 
 /* if the request does not ask for a feed it renders XHTML  */
@@ -181,10 +196,7 @@ if (!$feed & !$pdf)
 {
 
 	$id = get_get('id',-1);
-	
 		
-	// echo $file;
-
 	$file = stripslashes($file);
 	
 
@@ -214,6 +226,7 @@ if (!$feed & !$pdf)
 	$templates['viewer']->set('form_upload',get_upload_form());
 	$templates['viewer']->set('form_meta',get_meta_form($file));
 	$templates['viewer']->set('form_search',get_search_form($file));
+	$templates['viewer']->set('form_additem',get_item_form($file));
 
 	/* set SimplyBibTeX strings */
 	$templates['viewer']->set('sbx_version',$cfg['version']);
