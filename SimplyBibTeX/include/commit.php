@@ -72,7 +72,7 @@ if ($command == 'upload')
 	$lines = file($filename);
 	
 	/* get the length of the original part */
-	$length = $_POST['lineend']-$_POST['linebegin'];
+	$length = $_POST['lineend'] - $_POST['linebegin'];
 	
 	/* explode the new items into an array */
 	$newitem = explode("\r\n",stripslashes($_POST['item']));
@@ -81,7 +81,7 @@ if ($command == 'upload')
 		array_push($newlines,$newline . "\r\n");
 		
 	/* insert the items instead of the old */
-	array_splice($lines,$_POST['linebegin'],$length,$newlines);
+	array_splice($lines,$_POST['linebegin']-1,$length,$newlines);
 	
 	/* open the file */
 	$fp = fopen('../'.$_POST['db'],'w+');

@@ -182,7 +182,6 @@
 					<span title="Add an item to this database" onclick="javascript:toggle('additemform');">Add</span> |
 					<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
 					<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
-					<span title="edit meta information" onclick="javascript:toggle('metaform');">Meta</span> |
 					<span title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
 					<?=$form_select?>
 				</span>
@@ -199,19 +198,17 @@
 					<?=$form_upload?>
 				</div>
 				<div id="metaform" class="hidden">
-					<?=$form_meta?>
+					
 				</div>
 				<div id="help" class="hidden">
 					<?=$sbx_help?>
 				</div>
-			
-				
-				
 				
 			</div>
 			<div id="content">
 				<?=$content?>
 			</div>
+
 			<div id="footer">
 				SimplyBibTeX <?=$sbx_version?> &copy; Copyrights 2005, Hartmut Seichter | <a title="valid XHTML 1.0" href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a title="valid Cascading Style Sheets" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a title="RSS 2.0 Feed" href="<?=$rss2?>">RSS</a> | <a title="Atom Feed" href="<?=$atom?>">Atom</a>
 			</div>

@@ -65,11 +65,9 @@ function parse() {
 	
 	foreach($lines as $line) {
 	
+		$lineindex++;
+		
 		$this->items['lineend'][$this->count] = $lineindex; 
-		
-		
-		$lineindex++;	
-		
 		
 		$line = trim($line);
 
@@ -182,11 +180,12 @@ function parse() {
 		$template->set($name,(isset($this->items[$name][$id])? ($encode) ? strtr($this->items[$name][$id],$trans) : $this->items[$name][$id] : $default));
 
 	}
-	function render_id($template,$encode,$id)
+	function render_id(&$template, $encode, $id, &$trans)
 	{
 		$output = NULL;
 
-		$trans = get_html_translation_table(HTML_ENTITIES);
+		if ($encode && !$trans)
+			$trans = get_html_translation_table(HTML_ENTITIES);
 
 		// fill the template engine with the respective values
 		$template->set("type",$this->types[$id]);
@@ -226,15 +225,14 @@ function parse() {
 	}
 
 
-	function render_all($template,$encode,$fallbacks)
+	function render_all(&$template,$encode,$fallbacks)
 	{	
-		$trans = get_html_translation_table(HTML_ENTITIES);
 		$output = NULL;
 		
 		for ($i = 0; $i <= $this->count; $i++)
 		{
 			
-			$output .= $this->render_id($template,$encode,$i);
+			$output .= $this->render_id($template,$encode,$i,$trans);
 			
 		}
 		return $output;

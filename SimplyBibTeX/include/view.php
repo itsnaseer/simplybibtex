@@ -19,13 +19,16 @@ class View {
 
 	function get_html($title, $database, $templates, $id)
 	{
+	
+		$trans = get_html_translation_table(HTML_ENTITIES);
+
 
 		$encode = TRUE;
 
 		$fallbacks = array('url'=> NULL
 		);
 		
-		$content = ($id == -1) ? $database->render_all($templates['content'],$encode,NULL) : $database->render_id($templates['content'],$encode,$id);
+		$content = ($id == -1) ? $database->render_all($templates['content'],$encode,NULL) : $database->render_id($templates['content'],$encode,$id,$trans);
 
 		$templates['viewer']->set("content",$content);
 		$templates['viewer']->set("title",$title);
