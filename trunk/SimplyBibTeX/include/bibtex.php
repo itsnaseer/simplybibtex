@@ -106,8 +106,10 @@ function parse()
 	} // parse
 
 
-	function render_all($template)
+	function render_all($template,$html_encoded)
 	{
+		$trans = get_html_translation_table(HTML_ENTITIES);
+
 		for ($i = 0; $i <= $this->count; $i++)
 		{
 			// fill the template engine with the respective values
@@ -122,7 +124,7 @@ function parse()
 
 			$template->set("journal",$this->items[journal][$i].$this->items[booktitle][$i]);
 			$template->set("author",$this->items[author][$i]);
-			$template->set("title",$this->items[title][$i]);
+			$template->set("title",strtr($this->items[title][$i],$trans));
 			$template->set("volume",$this->items[volume][$i].$this->items[chapter][$i]);
 			$template->set("url",$this->items[url][$i]);
 			$template->set("note",$this->items[note][$i]);
@@ -133,7 +135,7 @@ function parse()
 			$template->set("page-start",$this->items[page-start][$i]);
 			$template->set("page-end",$this->items[page-end][$i]);		
 			$template->set("pages",$this->items[pages][$i]);
-			$template->set("address",$this->items[address][$i]);
+			$template->set("address",strtr($this->items[address][$i],$trans));
 			$template->set("raw",$this->items[raw][$i]);
 
 			$template->make();

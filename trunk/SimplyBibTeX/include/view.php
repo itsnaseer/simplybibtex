@@ -17,7 +17,9 @@ class View {
 	function View($title,$database, $templates, $menu)
 	{
 
-		$templates[viewer]->set("content",$database->render_all($templates[content]));
+		$content = $database->render_all($templates[content],$encode);
+
+		$templates[viewer]->set("content",$content);
 		$templates[viewer]->set("title",$title);
 		$templates[viewer]->set("menu",$menu);
 
