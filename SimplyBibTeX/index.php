@@ -51,8 +51,6 @@ function get_file_form($current)
 					$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
 					
 					$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file . ' (' . $directory . ')</option>'; 
-					
-					
 				};
 			} // while
 			closedir($dir);
