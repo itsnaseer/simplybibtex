@@ -48,7 +48,7 @@ function get_file_form($current)
 	$menu  = '<form id="filelist" name="filelist" action="'.$_SERVER['PHP_SELF'].'" method="get">';
 	$menu .= '<select class="formitem" name="db" size="1" onchange="javascript:document.filelist.submit();">';
 
-	$directories = explode(',',$cfg['libraries']);
+	$directories = explode(',',$cfg['library']);
 
 	foreach($directories as $directory) {
 
