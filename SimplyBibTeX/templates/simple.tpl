@@ -15,5 +15,7 @@
 		<br/>
 		<b>URL:</b>&nbsp;<a href="<?=$url?>" target="_blank" title="<?=$title?>"><?=$url?></a>
 		<br/>
+		<b>BibTeX:</b>&nbsp;<?=$raw?>
+		<br/>
 	</div>
 </div>

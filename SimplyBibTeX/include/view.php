@@ -14,16 +14,42 @@ require_once('template.php');
 
 class View {
 
-	function View($title,$database, $templates, $menu)
+	function View() {}
+
+
+	function get_html($title, $database, $templates, $menu)
 	{
 
-		$content = $database->render_all($templates[content],$encode);
+		$encode = TRUE;
+
+		$content = $database->render_all($templates[content],$encode,$NULL);
 
 		$templates[viewer]->set("content",$content);
 		$templates[viewer]->set("title",$title);
 		$templates[viewer]->set("menu",$menu);
 
-		$templates[viewer]->run();
+		$templates[viewer]->make();
+
+		return $templates[viewer]->output;
+	}
+
+	function get_rss($title, $database, $templates, $link)
+	{
+		
+		$fallbacks = array('url'=>'http://www.technotecture.com'
+		);
+
+		$encode = TRUE;
+
+		$content = $database->render_all($templates[content],$encode,$fallbacks);
+
+		$templates[viewer]->set("content",$content);
+		$templates[viewer]->set("title",$title);
+		$templates[viewer]->set("link",$link);
+
+		$templates[viewer]->make();
+
+		return $templates[viewer]->output;
 	}
 }
 
