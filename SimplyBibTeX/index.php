@@ -71,10 +71,10 @@ $feed = $_GET['feed'];
 if (!$feed)
 {
 
-	$file = $_POST['id'];
+	$id = $_POST['id'];
 
-	if (!$file)
-		$file = $_GET['id'];
+	if (!$id)
+		$id = $_GET['id'];
 
 	$file = $_POST['db'];
 
@@ -130,7 +130,7 @@ if (!$feed)
 		$templates[content] = new Template('templates/atom_item.tpl');
 		header('Content-Type: application/xml');
 	};
-	$templates[viewer]->set('link',get_link($file));
+	$templates[viewer]->set('baselink',get_link($file));
 	$templates[content]->set('link',get_link($file));
 
 	$templates[viewer]->set('time',date("r", time())); 

@@ -22,6 +22,10 @@ class View {
 
 		$encode = TRUE;
 
+		$fallbacks = array('url'=>$link
+		);
+
+
 		
 		$content = (!$id) ? $database->render_all($templates[content],$encode,$NULL) : $database->render_id($templates[content],$encode,$id);
 
