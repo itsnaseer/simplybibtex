@@ -15,15 +15,15 @@ require_once('include/view.php');
 function get_file_menu($directory,$current)
 {
 
-	$menu .= '<form name="filelist" method="POST">';
-	$menu .= '<select name="db" size="1" onChange="filelist.submit()">';
+	$menu .= '<form name="filelist" method="post" action="">';
+	$menu .= '<select name="db" size="1" onchange="filelist.submit()">';
 
 	if ($dir = opendir($directory)) { 
 		while (false !== ($file = readdir($dir))) 
 		{
 			if ($file != "." && $file != ".." && $file != "CVS") {
 
-				$sel_html = ($directory .'/'. $file == $current) ? 'selected' : '';
+				$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
 				$menu .= '<option value="' . $file . '" ' . $sel_html . '>' . $file.'</option>'; 
 				
 			};
