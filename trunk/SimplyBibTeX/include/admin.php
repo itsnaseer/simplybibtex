@@ -41,11 +41,19 @@ class Admin {
 
 		$output = "";
 
+		
+
 		/* try to create a data folder */
-		if (!@mkdir($cfg['library'])) {
-			$output .= '<br />Error: could not create '.$cfg['library'];
+		if (!file_exists($cfg['library'])) {
+			$output .= '<b>Fresh install</b>';
+			$old_umask = umask(0);
+			if (!@mkdir($cfg['library'])) {
+				$output .= '<br />Error: could not create '.$cfg['library'];
+			} else {
+				$output .= '<br />Success: created '.$cfg['library'];
+			}
 		} else {
-			$output .= '<br />Success: created '.$cfg['library'];
+			$output .= '<b>Update</b>';
 		}
 
 		/* try to create a data folder */
