@@ -13,7 +13,7 @@
 
 require_once('include/bibtex.php');
 require_once('include/view.php');
-
+require_once('include/globals.php');
 
 
 function get_file_form($directory,$current)
@@ -71,6 +71,8 @@ $feed = $_GET['feed'];
 if (!$feed)
 {
 
+	// global cfg;
+
 	$id = $_POST['id'];
 
 	if (!$id)
@@ -83,6 +85,7 @@ if (!$feed)
 
 	if (!$file) 
 		$file = 'bibs/example.bib';
+		// $file = cfg['default']['library'];
 
 	$file = stripslashes($file);
 	
