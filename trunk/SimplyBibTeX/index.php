@@ -118,6 +118,8 @@ if (!$feed)
 		$templates[content] = new Template('templates/atom_item.tpl');
 		header('Content-Type: application/xml');
 	};
+	$templates[viewer]->set('link',$_SERVER['REQUEST_URI']);
+	$templates[content]->set('link',$_SERVER['HTTP_HOST']);
 
 	$templates[viewer]->set('time',date("r", time())); 
 	$templates[viewer]->set('dbtime',date("r", filemtime($file))); 

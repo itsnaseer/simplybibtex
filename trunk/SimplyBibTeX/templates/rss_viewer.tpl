@@ -7,7 +7,6 @@
 		<title><?=$title?></title>
 		<link><?=$link?></link>
 		<description>SimplyBibTeX Feed</description>
-		<managingEditor>hartmut@technotecture.com</managingEditor>
 		<webMaster>webmaster@technotecture.com</webMaster>
 		<lastBuildDate><?=$dbtime?></lastBuildDate>
 		<dc:creator>SimplyBibTeX</dc:creator>
