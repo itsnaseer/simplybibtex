@@ -32,8 +32,8 @@ function glob_func($path,$files)
 	if ($dir = opendir($path)) {
 
 		while ($file = readdir($dir)) {
-
-			if (fnmatch($files,$file)) array_push($result, $path .'/'. $file);
+			if (ereg("(\.bib)$",strtolower($file)) )
+					$result[] = $path .'/'. $file;
 		}
 		closedir($dir);
 	}

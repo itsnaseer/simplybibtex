@@ -35,7 +35,7 @@ function get_file_form($current)
 
 	$directory = $cfg['library'];
 
-	foreach (glob_func("$cfg[library]","*.bib") as $file) {
+	foreach (glob_func("$cfg[library]",".bib") as $file) {
 	
 		$sel_html = ($file == $current) ? 'selected="selected"' : '';				
 		$menu .= '<option value="' . $file . '" ' . $sel_html . '>' . $file . '</option>'; 
