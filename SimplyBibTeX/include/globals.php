@@ -17,16 +17,14 @@ $cfg['version'] 				= "$cfg[major].$cfg[minor].$cfg[build]";
 $cfg['web_url'] 				= 'http://www.technotecture.com/software/SimplyBibTeX/';
 $cfg['helpfile']				= 'docs/help.inc';
 
-/* default settings */
-$cfg['library']		= "bibs";
-$cfg['uploads'] 	= "uploads";
-$cfg['database'] 	= "$cfg[uploads]/Hoover.bib";
+/* default data forlder settings */
+$cfg['library']		= "data";
+$cfg['templates']	= "templates";
+$cfg['config']		= "$cfg[library]/index.meta";
 
 
 /* change that if you do not want to include uploaded libaries */
 $cfg['libraries'] = "$cfg[library],$cfg[uploads]";
 
-/* include with the local configuration */
-// @require_once('..\config.inc');
 
 ?>
