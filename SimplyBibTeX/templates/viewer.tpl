@@ -21,6 +21,16 @@
 			}
 		</script>
 		<style type="text/css">
+			body {
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				margin: 1em 0;
+				padding: 0;
+				text-align: center;	
+			}
+			a {
+				color: black;
+			}
+				
 			.hidden {
 				display: none;
 			}
@@ -29,11 +39,14 @@
 				background-color: #eff;
 				padding: 0.5em;
 				margin:0.2em;
-				border: 1px #eee solid;
+				border: 1px #999 solid;
 			}
 			.item {
-				font: 8pt "Lucida Grande", Tahoma, Helvetica, sans-serif;
-				padding:0.5em;
+				font: 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				padding:0.5em;#submenu a {
+				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				color: white;
+			}
 				border-bottom: 1px #ccc solid;
 				border-top: 1px #fff solid;
 			}
@@ -56,24 +69,41 @@
 
 			#container {
 				width: 600px;
-				margin-left: auto;
-				margin-right: auto;
+				margin: 0px auto;
+				padding:1em;			
+				text-align: left;
 			}
 			#header {
-				font: bold 12pt "Lucida Grande", Tahoma, Helvetica, sans-serif;
+				font: bold 12pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				color: white;
 				padding: 1em;
 				background-color: #e33;
 			}
 			#footer {
-				font: normal 6pt "Lucida Grande", Tahoma, Helvetica, sans-serif;
-				color: white;
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				color: #333;
 				padding: 0.5em;
+				background-color: #ffe;
+			}			
+			#submenu {
 				background-color: #666;
-			}
-			#footer a {
-				font: bold 6pt "Lucida Grande", Tahoma, Helvetica, sans-serif;
+				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				color: white;
+				padding:0.75em;
+			}
+			#submenu a {
+				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				color: white;
+			}
+			#submenu form {
+				padding: 0;
+				vertical-align: top;
+				margin: 0;
+			}
+			#help {
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				color: #666;
+				background-color: #ffe;
 			}
 		</style>
 	</head>
@@ -82,12 +112,28 @@
 			<div id="header">
 				SimplyBibTeX
 			</div>
-			<div id="menu">
-				<?=$selector?>
+			<div id="submenu">
+				<div style="float:left;clear:right">
+					<?=$form_select?>
+				</div>&nbsp;
+				<span onclick="javascript:toggle('uploadform');">Upload</span> |
+				<span onclick="javascript:toggle('metaform');">Meta</span> |
+				<span onclick="javascript:toggle('help');">Help</span> |
+				<a href="<?=$rss2?>">RSS</a> | <a href="<?=$atom?>">Atom</a>
+				<div id="uploadform" class="hidden">
+					Upload your own BibTeX files here.
+					<?=$form_upload?>
+				</div>
+				<div id="metaform" class="hidden">
+					<?=$form_meta?>
+				</div>
+				<div id="help" class="hidden">
+						<?=$sbx_help?>
+				</div>
 			</div>
-			<?=$content?>
+				<?=$content?>
 			<div id="footer">
-				<a href="<?=$rss2?>">RSS</a> | <a href="<?=$atom?>">Atom</a> | SimplyBibTeX &copy; Copyrights 2005, Hartmut Seichter | <?=$time?>
+				SimplyBibTeX <?=$sbx_version?> &copy; Copyrights 2005, Hartmut Seichter | <a href="http://validator.w3.org/check?uri=referer">XHTML 1.0</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
 			</div>
 		</div>
 	</body>

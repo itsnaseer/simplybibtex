@@ -10,30 +10,38 @@
 // ---------------------------------------------------------------------------
 
 
-
 require_once('include/bibtex.php');
 require_once('include/view.php');
 require_once('include/globals.php');
 
-
-function get_file_form($directory,$current)
+/* generates a form to change the BibTeX file */
+function get_file_form($current)
 {
+
+	global $cfg;
 
 	$menu .= '<form name="filelist" method="post" action="">';
 	$menu .= '<select class="formitem" name="db" size="1" onchange="filelist.submit()">';
 
-	if ($dir = opendir($directory)) { 
-		while (false !== ($file = readdir($dir))) 
-		{
-			if ($file != "." && $file != ".." && $file != "CVS") {
+	$directories = explode(',',$cfg['libraries']);
 
-				$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
-				$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file.'</option>'; 
-				
-			};
-		} // while
-	} // if
-	closedir($dir);
+	foreach($directories as $directory) {
+
+		if ($dir = @opendir($directory)) { 
+			while (false !== ($file = readdir($dir))) 
+			{
+				if ($file != "." && $file != ".." && $file != "CVS" && !strstr($file,'.meta') &&
+					!strstr($file,'.meta')) {
+
+					$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
+					$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file . ' (' . $directory . ')</option>'; 
+					
+				};
+			} // while
+			closedir($dir);
+		} // if
+		
+	};
 
 	$menu .= '</select>';
 	$menu .= '</form>';
@@ -41,23 +49,90 @@ function get_file_form($directory,$current)
 	return $menu;
 }
 
-function get_search_form($directory,$current)
+/* generate an upload form */
+function get_upload_form()
 {
+	$form .= '<form action="include/commit.php" method="post" enctype="multipart/form-data">';
+	$form .= '<input type="file" name="userfile" size="40" />';
+	$form .= '<input type="hidden" name="command" value="upload"/>';
+	$form .= '<input type="submit" value="Upload" />';
+	$form .= '</form>';
+	
+	return $form;
+}
+
+function get_meta($file) {
+
+	$metafile = $file . '.meta';
+	$meta = (file_exists($metafile)) ? implode(file($metafile)) : "";
+	return $meta;
+}
+
+/* generate an upload form */
+function get_meta_form($file)
+{
+	$form .= '<form action="include/commit.php" method="post">';
+	$form .= '<textarea rows="20" cols="60" name="meta">' . get_meta($file) . '</textarea>';
+	$form .= '<input type="hidden" name="command" value="refresh_meta"/><br />';
+	$form .= '<input type="hidden" name="db" value="' . $file . '"/>';
+	$form .= '<input type="submit" value="commit" />';
+	$form .= '<input type="reset" value="reset" />';
+	$form .= '</form>';
+	
+	return $form;
 }
 
 
+/* return the help file */
+function get_help() {
+
+	global $cfg;
+	$help = (file_exists($cfg['helpfile'])) ? implode('<br/>',file($cfg['helpfile'])) : "Help not installed!";
+	return $help;
+}
+
+/* generate an upload form */
+function get_bibtex_form()
+{
+	$meta = "";
+	$form .= '<form action="include.php" method="post">';
+	$form .= '<textarea rows="20" cols="70">' . $meta . '</textarea>';
+	$form .= '<input type="hidden" name="command" value="commit"/><br />';
+	$form .= '<input type="submit" value="commit" />';
+	$form .= '<input type="reset" value="reset" />';
+	$form .= '</form>';
+	
+	return $form;
+}
+
+
+
+/* generates the internal help */
+function get_search_form($directory,$current)
+{
+	$form .= '<form action="include/commit.php" method="post">';
+	$form .= '<input type="text" name="id_string" size="40" maxlength="200" value="'.$string.'"/>';
+	$form .= '<input type="hidden" name="command" value="commit"/>';
+	$form .= '<input type="submit" value="commit" />';
+	$form .= '<input type="reset" value="reset" />';
+	$form .= '</form>';
+	
+	return $form;	
+}
+
+/* generates a link to the RSS feed of the current database */
 function get_rss_link($directory,$current)
 {
 	return $_PHP['SELF'].'?feed=rss2&amp;db='.$current;
 };
 
+/* generates a link to the Atom feed of the current database */
 function get_atom_link($directory,$current)
-{
-	
+{	
 	return $_PHP['SELF'].'?feed=atom&amp;db='.$current;
 };
 
-
+/* generates the current possition of the script on the server */
 function get_link($current)
 {
 	$trans = get_html_translation_table(HTML_ENTITIES);
@@ -66,16 +141,23 @@ function get_link($current)
 	return $urls[0];
 }
 
+/* get the internal configuration */
+global $cfg;
+
+/* check if we been asked to render a feed */
 $feed = $_GET['feed'];
 
-if (!$feed)
-{
+/* check if we been asked to render a PDF */
+$pdf = $_GET['pdf'];
 
-	// global cfg;
+/* if the request does not ask for a feed it renders XHTML  */
+if (!$feed && !$pdf)
+{
 
 	$id = $_POST['id'];
 
-	if (!$id)
+	/* check if we been asked to render only a single id */
+	if ($id !== NULL)
 		$id = $_GET['id'];
 
 	$file = $_POST['db'];
@@ -84,8 +166,7 @@ if (!$feed)
 		$file = $_GET['db'];
 
 	if (!$file) 
-		$file = 'bibs/example.bib';
-		// $file = cfg['default']['library'];
+		$file = $cfg['database'];
 
 	$file = stripslashes($file);
 	
@@ -103,7 +184,15 @@ if (!$feed)
 	$templates[viewer]->set('rss2',get_rss_link('bibs',$file));
 	$templates[viewer]->set('atom',get_atom_link('bibs',$file));
 
-	$templates[viewer]->set('selector',get_file_form('bibs',$file));
+	/* set all the forms */
+	$templates[viewer]->set('form_select',get_file_form($file));
+	$templates[viewer]->set('form_upload',get_upload_form());
+	$templates[viewer]->set('form_meta',get_meta_form($file));
+
+	/* set SimplyBibTeX strings */
+	$templates[viewer]->set('sbx_version',$cfg[version]);
+	$templates[viewer]->set('sbx_copy',$cfg[copy]);
+	$templates[viewer]->set('sbx_help',get_help());
 
 
 	$viewer = new View();
@@ -113,43 +202,70 @@ if (!$feed)
 
 	
 
-} else {
+} elseif ($feed && !$pdf) {
 
 	$file = $_GET['db'];
 
 	$bib = new BibTeX($file);
 	$bib->parse();
 
-	
+	/* if we send a feed, it is definitly XML encoded */	
 	$output .= "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
-
-	if ($feed=='rss2')
+	
+	/* check if requested feed is RSS 2.0 */
+	if ($feed == 'rss2')
 	{
+		/* load the RSS templates */
 		$templates[viewer] = new Template('templates/rss_viewer.tpl');
 		$templates[content] = new Template('templates/rss_item.tpl');
+		
+		/* RSS needs to be send with a proper HTTP header */
 		header('Content-Type: text/xml');
-	} elseif ($feed='atom') {
+
+	/* or if it is Atom */
+	} elseif ($feed == 'atom') {
+		
+		/* load the Atom templates */
 		$templates[viewer] = new Template('templates/atom_viewer.tpl');
 		$templates[content] = new Template('templates/atom_item.tpl');
+
+		/* Atom needs to be send with this content type */
 		header('Content-Type: application/xml');
 	};
+
+	/* set SimplyBibTeX strings */
+	$templates[viewer]->set('sbx_version',$cfg[version]);
+	$templates[viewer]->set('sbx_copy',$cfg[copy]);
+
+
+	/* set up internal links */
 	$templates[viewer]->set('baselink',get_link($file));
 	$templates[content]->set('link',get_link($file));
 	$templates[content]->set('db',$file);
 
+	/* set up time for the database and the core system */
 	$templates[viewer]->set('time',date("r", time())); 
 	$templates[viewer]->set('dbtime',date("r", filemtime($file))); 
 	$templates[content]->set('dbtime',date("r", filemtime($file))); 
 
-
+	/* create a viewer */
 	$viewer = new View();
 
+	/* generate the feed output through the templates */
 	$output .= $viewer->get_rss('BibTeX Viewer '.$file,$bib,$templates,$_PHP['SELF']);
 	
+	/* let the client know how many bytes we gonna send */
 	header('Content-Length: ' . strlen($output));
 	
+} elseif ($pdf == '1')
+{
+	/* TODO implement that */		
+} else
+{
+	/* TODO: render a error message? HTML is the base */
 };
 
+/* output the rendered content */
 echo $output;
 
 ?>
