@@ -14,13 +14,29 @@ require_once('include/bibtex.php');
 require_once('include/view.php');
 require_once('include/globals.php');
 
+
+function get_post($name,$default)
+{
+	if (isset($_POST[$name]))
+		return $_POST[$name];
+	return $default;
+};
+
+function get_get($name,$default)
+{
+	if (isset($_GET[$name]))
+		return $_GET[$name];
+	
+	return $default;		
+};
+
 /* generates a form to change the BibTeX file */
 function get_file_form($current)
 {
 
 	global $cfg;
 
-	$menu .= '<form name="filelist" method="post" action="">';
+	$menu  = '<form name="filelist" method="post" action="">';
 	$menu .= '<select class="formitem" name="db" size="1" onchange="filelist.submit()">';
 
 	$directories = explode(',',$cfg['libraries']);
@@ -52,7 +68,7 @@ function get_file_form($current)
 /* generate an upload form */
 function get_upload_form()
 {
-	$form .= '<form action="include/commit.php" method="post" enctype="multipart/form-data">';
+	$form  = '<form action="include/commit.php" method="post" enctype="multipart/form-data">';
 	$form .= '<input type="file" name="userfile" size="40" />';
 	$form .= '<input type="hidden" name="command" value="upload"/>';
 	$form .= '<input type="submit" value="Upload" />';
@@ -71,7 +87,7 @@ function get_meta($file) {
 /* generate an upload form */
 function get_meta_form($file)
 {
-	$form .= '<form action="include/commit.php" method="post">';
+	$form  = '<form action="include/commit.php" method="post">';
 	$form .= '<textarea rows="20" cols="60" name="meta">' . get_meta($file) . '</textarea>';
 	$form .= '<input type="hidden" name="command" value="refresh_meta"/><br />';
 	$form .= '<input type="hidden" name="db" value="' . $file . '"/>';
@@ -95,7 +111,7 @@ function get_help() {
 function get_bibtex_form()
 {
 	$meta = "";
-	$form .= '<form action="include.php" method="post">';
+	$form  = '<form action="include.php" method="post">';
 	$form .= '<textarea rows="20" cols="70">' . $meta . '</textarea>';
 	$form .= '<input type="hidden" name="command" value="commit"/><br />';
 	$form .= '<input type="submit" value="commit" />';
@@ -123,13 +139,13 @@ function get_search_form($directory,$current)
 /* generates a link to the RSS feed of the current database */
 function get_rss_link($directory,$current)
 {
-	return $_PHP['SELF'].'?feed=rss2&amp;db='.$current;
+	return $_SERVER['PHP_SELF'].'?feed=rss2&amp;db='.$current;
 };
 
 /* generates a link to the Atom feed of the current database */
 function get_atom_link($directory,$current)
 {	
-	return $_PHP['SELF'].'?feed=atom&amp;db='.$current;
+	return $_SERVER['PHP_SELF'].'?feed=atom&amp;db='.$current;
 };
 
 /* generates the current possition of the script on the server */
@@ -145,25 +161,24 @@ function get_link($current)
 global $cfg;
 
 /* check if we been asked to render a feed */
-$feed = $_GET['feed'];
+$feed = get_get('feed',NULL);
 
 /* check if we been asked to render a PDF */
-$pdf = $_GET['pdf'];
+$pdf = get_get('pdf',NULL);
 
 /* if the request does not ask for a feed it renders XHTML  */
-if (!$feed && !$pdf)
+if (!$feed & !$pdf)
 {
-
-	$id = $_POST['id'];
+	$id = get_post('id',NULL);
 
 	/* check if we been asked to render only a single id */
-	if ($id !== NULL)
-		$id = $_GET['id'];
+	if (!$id !== NULL)
+		$id = get_get('id',NULL);
 
-	$file = $_POST['db'];
+	$file = get_post('db',NULL);
 
 	if (!$file)
-		$file = $_GET['db'];
+		$file = get_get('db',NULL);
 
 	if (!$file) 
 		$file = $cfg['database'];
@@ -174,25 +189,25 @@ if (!$feed && !$pdf)
 	$bib = new BibTeX($file);
 	$bib->parse();
 
-	$templates[viewer] = new Template('templates/viewer.tpl');
-	$templates[content] = new Template('templates/simple.tpl');
+	$templates['viewer'] = new Template('templates/viewer.tpl');
+	$templates['content'] = new Template('templates/simple.tpl');
 
-	$templates[viewer]->set('time',date("r", time())); 
-	$templates[viewer]->set('dbtime',date("r", filemtime($file))); 
-	$templates[content]->set('dbtime',date("r", filemtime($file))); 
+	$templates['viewer']->set('time',date("r", time())); 
+	$templates['viewer']->set('dbtime',date("r", filemtime($file))); 
+	$templates['content']->set('dbtime',date("r", filemtime($file))); 
 
-	$templates[viewer]->set('rss2',get_rss_link('bibs',$file));
-	$templates[viewer]->set('atom',get_atom_link('bibs',$file));
+	$templates['viewer']->set('rss2',get_rss_link('bibs',$file));
+	$templates['viewer']->set('atom',get_atom_link('bibs',$file));
 
 	/* set all the forms */
-	$templates[viewer]->set('form_select',get_file_form($file));
-	$templates[viewer]->set('form_upload',get_upload_form());
-	$templates[viewer]->set('form_meta',get_meta_form($file));
+	$templates['viewer']->set('form_select',get_file_form($file));
+	$templates['viewer']->set('form_upload',get_upload_form());
+	$templates['viewer']->set('form_meta',get_meta_form($file));
 
 	/* set SimplyBibTeX strings */
-	$templates[viewer]->set('sbx_version',$cfg[version]);
-	$templates[viewer]->set('sbx_copy',$cfg[copy]);
-	$templates[viewer]->set('sbx_help',get_help());
+	$templates['viewer']->set('sbx_version',$cfg['version']);
+	// $templates['viewer']->set('sbx_copy',$cfg['copy']);
+	$templates['viewer']->set('sbx_help',get_help());
 
 
 	$viewer = new View();
@@ -216,8 +231,8 @@ if (!$feed && !$pdf)
 	if ($feed == 'rss2')
 	{
 		/* load the RSS templates */
-		$templates[viewer] = new Template('templates/rss_viewer.tpl');
-		$templates[content] = new Template('templates/rss_item.tpl');
+		$templates['viewer'] = new Template('templates/rss_viewer.tpl');
+		$templates['content'] = new Template('templates/rss_item.tpl');
 		
 		/* RSS needs to be send with a proper HTTP header */
 		header('Content-Type: text/xml');
@@ -226,27 +241,27 @@ if (!$feed && !$pdf)
 	} elseif ($feed == 'atom') {
 		
 		/* load the Atom templates */
-		$templates[viewer] = new Template('templates/atom_viewer.tpl');
-		$templates[content] = new Template('templates/atom_item.tpl');
+		$templates['viewer'] = new Template('templates/atom_viewer.tpl');
+		$templates['content'] = new Template('templates/atom_item.tpl');
 
 		/* Atom needs to be send with this content type */
 		header('Content-Type: application/xml');
 	};
 
 	/* set SimplyBibTeX strings */
-	$templates[viewer]->set('sbx_version',$cfg[version]);
-	$templates[viewer]->set('sbx_copy',$cfg[copy]);
+	$templates['viewer']->set('sbx_version',$cfg['version']);
+	$templates['viewer']->set('sbx_copy',$cfg['copy']);
 
 
 	/* set up internal links */
-	$templates[viewer]->set('baselink',get_link($file));
-	$templates[content]->set('link',get_link($file));
-	$templates[content]->set('db',$file);
+	$templates['viewer']->set('baselink',get_link($file));
+	$templates['content']->set('link',get_link($file));
+	$templates['content']->set('db',$file);
 
 	/* set up time for the database and the core system */
-	$templates[viewer]->set('time',date("r", time())); 
-	$templates[viewer]->set('dbtime',date("r", filemtime($file))); 
-	$templates[content]->set('dbtime',date("r", filemtime($file))); 
+	$templates['viewer']->set('time',date("r", time())); 
+	$templates['viewer']->set('dbtime',date("r", filemtime($file))); 
+	$templates['content']->set('dbtime',date("r", filemtime($file))); 
 
 	/* create a viewer */
 	$viewer = new View();
