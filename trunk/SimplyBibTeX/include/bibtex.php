@@ -1,12 +1,15 @@
 <?php
 // ---------------------------------------------------------------------------
+// Module:			
 // Author: 			Hartmut Seichter
 // Purpose:			BibTeX parser
 // Acknowledgement: Zhe Wu at Univ. of Rochester, http://qcite.com
+// License:			GPL
 // 
 // ---------------------------------------------------------------------------
 
 require_once('template.php');
+
 
 class BibTeX 
 {
@@ -14,28 +17,29 @@ class BibTeX
 	var $count;
 	var $items;
 	var $types;
+	var $fid;
 
 	var $pagefrom, $pageto;
 
-	function BibTeX() {
+	function BibTeX($file) {
+		$this->fid=fopen ($file,'r');
+		if (!$this->fid) 
+		{	
+			return null;
+		}		
 	}
 	
 
-function parse($filename)
+function parse()
 {
-	$fid=fopen ($filename,'r');
-
-	if (!$fid) 
-	{	
-		return null;
-	}
-
+	if (!$this->fid) return NULL;
+	
 	$this->count=-1;
 
 	for ($lineindex=0;$lineindex<800;$lineindex++)
 	{
-		if (feof($fid)){break;}
-		$line=trim(fgets($fid,10240));
+		if (feof($this->fid)){break;}
+		$line=trim(fgets($this->fid,10240));
 
 		$line=str_replace("'","`",$line);
 		$seg=str_replace("\"","`",$line);
@@ -56,6 +60,7 @@ function parse($filename)
         {
                 $ps=strpos($seg,'=');
                 $fieldcount++;
+				$this->items[raw][$this->count] .= $seg; 
                 $var[$fieldcount]=strtolower(trim(substr($seg,0,$ps)));
                 if ($var[$fieldcount]=='pages')
                 {
@@ -101,7 +106,7 @@ function parse($filename)
 
 	function render_all($template)
 	{
-		for ($i = 0; $i < $this->count; $i++)
+		for ($i = 0; $i <= $this->count; $i++)
 		{
 			// fill the template engine with the respective values
 			$template->set("type",$this->types[$i]);
@@ -110,7 +115,9 @@ function parse($filename)
 				$template->set("oddeven","odd");
 			else
 				$template->set("oddeven","even");
+
 			$template->set("number",$i);
+
 			$template->set("journal",$this->items[journal][$i].$this->items[booktitle][$i]);
 			$template->set("author",$this->items[author][$i]);
 			$template->set("title",$this->items[title][$i]);
@@ -125,6 +132,44 @@ function parse($filename)
 			$template->set("page-end",$this->items[page-end][$i]);		
 			$template->set("pages",$this->items[pages][$i]);
 			$template->set("address",$this->items[address][$i]);
+			$template->set("raw",$this->items[raw][$i]);
+
+			$template->make();
+
+			$output .= $template->output;
+		}
+		return $output;
+	}
+
+	function render_filter($template,$filter)
+	{
+		for ($i = 0; $i <= $this->count; $i++)
+		{
+			// fill the template engine with the respective values
+			$template->set("type",$this->types[$i]);
+			
+			if ($i % 2) 
+				$template->set("oddeven","odd");
+			else
+				$template->set("oddeven","even");
+
+			$template->set("number",$i);
+
+			$template->set("journal",$this->items[journal][$i].$this->items[booktitle][$i]);
+			$template->set("author",$this->items[author][$i]);
+			$template->set("title",$this->items[title][$i]);
+			$template->set("volume",$this->items[volume][$i].$this->items[chapter][$i]);
+			$template->set("url",$this->items[url][$i]);
+			$template->set("note",$this->items[note][$i]);
+			$template->set("abstract",$this->items[abstract][$i]);
+			$template->set("year",$this->items[year][$i]);
+			$template->set("group",$this->items[folder][$i]);
+			$template->set("publisher",$this->items[publisher][$i]);
+			$template->set("page-start",$this->items[page-start][$i]);
+			$template->set("page-end",$this->items[page-end][$i]);		
+			$template->set("pages",$this->items[pages][$i]);
+			$template->set("address",$this->items[address][$i]);
+			$template->set("raw",$this->items[raw][$i]);
 
 			$template->make();
 

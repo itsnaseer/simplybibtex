@@ -10,5 +10,9 @@
 		<b>Publisher:</b>&nbsp;<?=$publisher?>
 		<br/>
 		<b>Location:</b>&nbsp;<?=$address?>
+		<br/>
+		<b>BibTeX:</b><code>
+			<?=$raw?>
+		</code>
 	</div>
 </div>
