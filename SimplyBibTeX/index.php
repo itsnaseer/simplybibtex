@@ -18,6 +18,11 @@ require_once('include/functions.php');
 
 $admin = new Admin();
 
+
+$cache_extension = $_SERVER['REQUEST_URI'];
+
+// echo $cache_extension;
+
 if (!$admin->isInstalled()) {
 
 	$admin->doInstall();
@@ -33,22 +38,13 @@ function get_file_form($current)
 
 	$directory = $cfg['library'];
 
-	if ($dir = @opendir($directory)) { 
-		while (false !== ($file = readdir($dir))) 
-		{
-			if ($file != "." && $file != ".." && $file != "CVS" && !strstr($file,'.meta') &&
-				!strstr($file,'.meta')) {
-
-				
-				$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
-				
-				$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file . ' (' . $directory . ')</option>'; 
-			};
-		} // while
-		closedir($dir);
-	} // if
+	foreach (glob("$cfg[library]/*.bib") as $file) {
+	
+		$sel_html = ($file == $current) ? 'selected="selected"' : '';				
+		$menu .= '<option value="' . $file . '" ' . $sel_html . '>' . $file . '</option>'; 
 		
-
+	} // foreach
+	
 	$menu .= '</select></form>';	
 	return $menu;
 }
@@ -134,8 +130,8 @@ function get_search_form($current)
 {
 	$string = "";
 	$form  = '<form action="'.$_SERVER['PHP_SELF'].'" method="get">';
-	$form .= '<input type="text" name="find" size="40" maxlength="200" value="'.$string.'"/>';
 	$form .= '<input type="hidden" name="db" value="'.$current.'"/>';
+	$form .= '<input type="text" name="find" size="40" maxlength="200" value="'.$string.'"/>';
 	$form .= '<input type="submit" value="Go" />';
 	$form .= '</form>';
 	
@@ -191,13 +187,17 @@ if (!$feed & !$pdf)
 	
 	$search = get_get('find',NULL);
 	
-
 	$bib = new BibTeX($file);
 	$bib->parse();
 
 	/* load the HTML templates */
-	$templates['viewer'] = new Template('templates/viewer.tpl');
-	$templates['content'] = new Template('templates/simple.tpl');
+	$templates['viewer'] = new Template('templates/viewer.tpl',
+		$cfg['cache'],
+		$cache_extension);
+
+	$templates['content'] = new Template('templates/simple.tpl',
+		$cfg['cache'],
+		$cache_extension);
 
 
 	/* set up internal links */
@@ -248,8 +248,12 @@ if (!$feed & !$pdf)
 	if ($feed == 'rss2')
 	{
 		/* load the RSS templates */
-		$templates['viewer'] = new Template('templates/rss_viewer.tpl');
-		$templates['content'] = new Template('templates/rss_item.tpl');
+		$templates['viewer'] = new Template('templates/rss_viewer.tpl',
+			$cfg['cache'],
+			$cache_extension);
+		$templates['content'] = new Template('templates/rss_item.tpl',
+			$cfg['cache'],
+			$cache_extension);
 		
 		/* RSS needs to be send with a proper HTTP header */
 		header('Content-Type: text/xml');
@@ -258,8 +262,12 @@ if (!$feed & !$pdf)
 	} elseif ($feed == 'atom') {
 		
 		/* load the Atom templates */
-		$templates['viewer'] = new Template('templates/atom_viewer.tpl');
-		$templates['content'] = new Template('templates/atom_item.tpl');
+		$templates['viewer'] = new Template('templates/atom_viewer.tpl',
+			$cfg['cache'],
+			$cache_extension);
+		$templates['content'] = new Template('templates/atom_item.tpl',
+			$cfg['cache'],
+			$cache_extension);
 
 		/* Atom needs to be send with this content type */
 		header('Content-Type: application/xml');

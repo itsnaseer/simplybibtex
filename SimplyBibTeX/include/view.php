@@ -34,15 +34,12 @@ class View {
 				$database->render_id($templates['content'],$encode,$id,$trans);
 		} else {
 			$content = $database->render_search($templates['content'],$encode,$trans,$search);
-		
 		}
 
 		$templates['viewer']->set("content",$content);
 		$templates['viewer']->set("title",$title);
 
-		$templates['viewer']->make();
-
-		return $templates['viewer']->output;
+		return $templates['viewer']->fetch();
 	}
 
 	function get_rss($title, $database, $templates, $link)
@@ -52,16 +49,18 @@ class View {
 		);
 
 		$encode = TRUE;
+		
+		$trans = get_html_translation_table(HTML_ENTITIES);
 
-		$content = $database->render_all($templates['content'],$encode,$fallbacks);
+		$content = $database->render_all($templates['content'],$encode,
+			$fallbacks,
+			$trans);
 
 		$templates['viewer']->set("content",$content);
 		$templates['viewer']->set("title",$title);
-		$templates['viewer']->set("link",$link);
+		$templates['viewer']->set("link",$link);	
 
-		$templates['viewer']->make();
-
-		return $templates['viewer']->output;
+		return $templates['viewer']->fetch();
 	}
 }
 
