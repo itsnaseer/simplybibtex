@@ -106,7 +106,7 @@ function parse()
 	} // parse
 
 
-	function render_all($template,$html_encoded)
+	function render_all($template,$encoded,$fallbacks)
 	{
 		$trans = get_html_translation_table(HTML_ENTITIES);
 
@@ -126,7 +126,14 @@ function parse()
 			$template->set("author",$this->items[author][$i]);
 			$template->set("title",strtr($this->items[title][$i],$trans));
 			$template->set("volume",$this->items[volume][$i].$this->items[chapter][$i]);
-			$template->set("url",$this->items[url][$i]);
+
+			if ($this->items[url][$i])
+			{
+				$template->set("url",$this->items[url][$i]);
+			} else
+			{
+				$template->set("url",$fallbacks[url]);
+			}
 			$template->set("note",$this->items[note][$i]);
 			$template->set("abstract",$this->items[abstract][$i]);
 			$template->set("year",$this->items[year][$i]);
