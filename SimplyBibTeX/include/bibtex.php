@@ -13,8 +13,6 @@
 require_once('template.php');
 
 
-// $support_tags = array ('raw')
-
 class BibTeX 
 {
 
@@ -207,8 +205,7 @@ function parse() {
 			$this->set($template,'page-end',	$i,"");
 			$this->set($template,'pages',		$i,"");
 			$this->set($template,'address',		$i,"");
-			$this->set($template,'raw',	$i,		"");
-		
+			$this->set($template,'raw',			$i,"");
 			
 			$template->set("title",strtr($this->items['title'][$i],$trans));
 

@@ -12,10 +12,10 @@
 				document.getElementById(id).className = newclass;
 			}
 			function toggle(id) {
-				if (document.getElementById(id).className == 'visible') {
-					document.getElementById(id).className = 'hidden';
-				} else {
+				if (document.getElementById(id).className == 'hidden') {
 					document.getElementById(id).className = 'visible';
+				} else {
+					document.getElementById(id).className = 'hidden';
 				}
 					
 			}
@@ -36,6 +36,8 @@
 			}
 			.visible {
 				display: block;
+			}
+			.extended {
 				background-color: #eff;
 				padding: 0.5em;
 				margin:0.2em;
@@ -60,11 +62,14 @@
 				background-color: #666;
 				color: white;
 			}
-			#menu {
+			#header {
+				font: bold 12pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				color: white;
-				margin: 0;
-				background-color: #666;
-				border-top: 1px #600 solid;
+				padding: 1em;
+				background-color: #e33;
+			}
+			#content {
+				clear:both;
 			}
 
 			#container {
@@ -73,30 +78,27 @@
 				padding:1em;			
 				text-align: left;
 			}
-			#header {
-				font: bold 12pt "Lucida Grande", Arial, Helvetica, sans-serif;
-				color: white;
-				padding: 1em;
-				background-color: #e33;
-			}
 			#footer {
 				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
-				color: #333;
+				color: white;
 				padding: 0.5em;
-				background-color: #ffe;
-			}			
-			#submenu {
+				background-color: #999;
+			}		
+			#footer a {
+				color: white;
+			}
+			#menu {
 				background-color: #666;
-				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				color: white;
 				padding:0.75em;
+				clear:both;
 			}
-			#submenu a {
-				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+			#menu a {
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				color: white;
 			}
-			#submenu form {
-				padding: 0;
+			#menu form {
 				vertical-align: top;
 				margin: 0;
 			}
@@ -105,6 +107,40 @@
 				color: #666;
 				background-color: #ffe;
 			}
+			#searchform {
+				background-color: #ffe;
+				padding:1em;
+			}
+			#uploadform {
+				background-color: #fee;
+				padding:1em;
+			}
+			#filelist {	
+				width:150px;
+				vertical-align:top;
+				float:right;
+				clear:both;
+			}
+			#filelist select {
+				border:0;
+			}
+			.item_menu {
+				background-color: #999;
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				color: white;
+				padding: 0.5em;
+			}
+			.item_menu a {
+				color: white;
+				text-decoration : none;
+				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+			}
+			.item_extended {
+				background-color: #efe;
+				color: black;
+				border: 1px solid #999;
+				padding:0.5em;
+			}
 		</style>
 	</head>
 	<body>
@@ -112,28 +148,32 @@
 			<div id="header">
 				SimplyBibTeX
 			</div>
-			<div id="submenu">
-				<div style="float:left;clear:right">
-					<?=$form_select?>
-				</div>&nbsp;
-				<span onclick="javascript:toggle('uploadform');">Upload</span> |
-				<span onclick="javascript:toggle('metaform');">Meta</span> |
-				<span onclick="javascript:toggle('help');">Help</span> |
-				<a href="<?=$rss2?>">RSS</a> | <a href="<?=$atom?>">Atom</a>
+			<div id="menu">
+				<?=$form_select?>
+				<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
+				<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
+				<span title="edit meta information" onclick="javascript:toggle('metaform');">Meta</span> |
+				<span title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
+				
+				<div id="searchform" class="hidden">
+					<?=$form_search?>
+				</div>
 				<div id="uploadform" class="hidden">
-					Upload your own BibTeX files here.
 					<?=$form_upload?>
 				</div>
 				<div id="metaform" class="hidden">
 					<?=$form_meta?>
 				</div>
 				<div id="help" class="hidden">
-						<?=$sbx_help?>
+					<?=$sbx_help?>
 				</div>
+				
 			</div>
+			<div id="content">
 				<?=$content?>
+			</div>
 			<div id="footer">
-				SimplyBibTeX <?=$sbx_version?> &copy; Copyrights 2005, Hartmut Seichter | <a href="http://validator.w3.org/check?uri=referer">XHTML 1.0</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+				SimplyBibTeX <?=$sbx_version?> &copy; Copyrights 2005, Hartmut Seichter | <a title="valid XHTML 1.0" href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a title="valid Cascading Style Sheets" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a title="RSS 2.0 Feed" href="<?=$rss2?>">RSS</a> | <a title="Atom Feed" href="<?=$atom?>">Atom</a>
 			</div>
 		</div>
 	</body>
