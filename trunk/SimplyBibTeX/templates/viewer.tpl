@@ -69,6 +69,8 @@
 			.formitem {
 				background-color: #666;
 				color: white;
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				border:0;
 			}
 			#header {
 				font: bold 12pt "Lucida Grande", Arial, Helvetica, sans-serif;
@@ -116,22 +118,30 @@
 				color: #666;
 				background-color: #ffe;
 			}
+			#additemform {
+				background-color: #666;
+				padding:1em;
+			}
+
 			#metaform {
-				background-color: #ffe;
+				background-color: #666;
 				padding:1em;
 			}
 			#searchform {
-				background-color: #ffe;
+				background-color: #666;
 				padding:1em;
 			}
 			#uploadform {
-				background-color: #fee;
+				background-color: #666;
 				padding:1em;
 			}
 			#filelist {
 				border:0;
 				display:inline;
 				float:right;
+			}
+			.item_short {
+				padding:0.3em;
 			}
 			.item_menu {
 				background-color: #999;
@@ -162,12 +172,21 @@
 				SimplyBibTeX
 			</div>
 			<div id="menu">
-				<?=$form_select?>&nbsp;&nbsp;&nbsp;&nbsp;
-				<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
-				<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
-				<span title="edit meta information" onclick="javascript:toggle('metaform');">Meta</span> |
-				<span title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
+			
+				<span>
+					<span title="Add an item to this database" onclick="javascript:toggle('additemform');">Add</span> |
+					<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
+					<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
+					<span title="edit meta information" onclick="javascript:toggle('metaform');">Meta</span> |
+					<span title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
+					<?=$form_select?>
+				</span>
 				
+				<br style="clear:both;"/>
+
+				<div id="additemform" class="hidden">
+					<?=$form_additem?>
+				</div>
 				<div id="searchform" class="hidden">
 					<?=$form_search?>
 				</div>
@@ -180,6 +199,9 @@
 				<div id="help" class="hidden">
 					<?=$sbx_help?>
 				</div>
+			
+				
+				
 				
 			</div>
 			<div id="content">

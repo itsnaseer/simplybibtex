@@ -1,0 +1,92 @@
+[Config]
+Relative path=1
+Compilator.FileName=
+Compilator.PSPar=
+Compilator.Log=
+Compilator.Run=
+Compilator.DefaultDir=
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.ParsLog=
+Compilator.HideOutput=0
+Prog1=
+Prog2=
+Prog3=
+Prog4=
+Prog5=
+DefaultDir=
+DefaultCPIndex=0
+LogtoEnd=1
+DontOpen=0
+FileFormat=0
+DocumentRoot=
+HTServer=
+[Project tree]
+SimplyBibTeX
+	+SimplyBibTeX
+		-bibs
+			bibs\example.bib
+		-docs
+			docs\help.inc
+		+include
+			include\bibtex.php
+			include\commit.php
+			include\globals.php
+			include\template.php
+			include\view.php
+		+templates
+			-images
+				templates\images\toggle.gif
+			templates\atom_item.tpl
+			templates\atom_viewer.tpl
+			templates\rss_item.tpl
+			templates\rss_viewer.tpl
+			templates\simple.tpl
+			templates\viewer.tpl
+		index.php
+		config.inc
+		uploads\Hoover.bib
+[Open project files]
+0=include\commit.php
+1=config.inc
+2=include\globals.php
+3=..\LeechPointLite\include\db.php
+4=uploads\Hoover.bib
+5=bibs\example.bib
+6=templates\viewer.tpl
+7=index.php
+8=templates\simple.tpl
+9=include\bibtex.php
+[Selected Project Files]
+Main=
+Selected=uploads\Hoover.bib
+[include\commit.php]
+TopLine=57
+Caret=3,82
+[config.inc]
+TopLine=1
+Caret=34,3
+[include\globals.php]
+TopLine=1
+Caret=24,15
+[..\LeechPointLite\include\db.php]
+TopLine=4
+Caret=76,27
+[uploads\Hoover.bib]
+TopLine=31
+Caret=1,62
+[bibs\example.bib]
+TopLine=1
+Caret=1,1
+[templates\viewer.tpl]
+TopLine=120
+Caret=5,142
+[index.php]
+TopLine=39
+Caret=1,58
+[templates\simple.tpl]
+TopLine=12
+Caret=32,31
+[include\bibtex.php]
+TopLine=74
+Caret=53,98
