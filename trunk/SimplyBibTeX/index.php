@@ -36,7 +36,7 @@ function get_file_form($current)
 
 	global $cfg;
 
-	$menu  = '<form name="filelist" method="post" action="">';
+	$menu  = '<form id="filelist" name="filelist" method="post" action="">';
 	$menu .= '<select class="formitem" name="db" size="1" onchange="filelist.submit()">';
 
 	$directories = explode(',',$cfg['libraries']);
@@ -77,6 +77,7 @@ function get_upload_form()
 	return $form;
 }
 
+/* get the meta */
 function get_meta($file) {
 
 	$metafile = $file . '.meta';
@@ -87,6 +88,7 @@ function get_meta($file) {
 /* generate an upload form */
 function get_meta_form($file)
 {
+
 	$form  = '<form action="include/commit.php" method="post">';
 	$form .= '<textarea rows="20" cols="60" name="meta">' . get_meta($file) . '</textarea>';
 	$form .= '<input type="hidden" name="command" value="refresh_meta"/><br />';
@@ -124,13 +126,12 @@ function get_bibtex_form()
 
 
 /* generates the internal help */
-function get_search_form($directory,$current)
+function get_search_form($current)
 {
-	$form .= '<form action="include/commit.php" method="post">';
+	$form  = '<form action="include/commit.php" method="post">';
 	$form .= '<input type="text" name="id_string" size="40" maxlength="200" value="'.$string.'"/>';
-	$form .= '<input type="hidden" name="command" value="commit"/>';
-	$form .= '<input type="submit" value="commit" />';
-	$form .= '<input type="reset" value="reset" />';
+	$form .= '<input type="hidden" name="command" value="search"/>';
+	$form .= '<input type="submit" value="Go" />';
 	$form .= '</form>';
 	
 	return $form;	
@@ -189,9 +190,17 @@ if (!$feed & !$pdf)
 	$bib = new BibTeX($file);
 	$bib->parse();
 
+	/* load the HTML templates */
 	$templates['viewer'] = new Template('templates/viewer.tpl');
 	$templates['content'] = new Template('templates/simple.tpl');
 
+
+	/* set up internal links */
+	$templates['viewer']->set('baselink',get_link($file));
+	$templates['content']->set('link',get_link($file));
+	$templates['content']->set('db',$file);
+
+	/* time */
 	$templates['viewer']->set('time',date("r", time())); 
 	$templates['viewer']->set('dbtime',date("r", filemtime($file))); 
 	$templates['content']->set('dbtime',date("r", filemtime($file))); 
@@ -203,6 +212,7 @@ if (!$feed & !$pdf)
 	$templates['viewer']->set('form_select',get_file_form($file));
 	$templates['viewer']->set('form_upload',get_upload_form());
 	$templates['viewer']->set('form_meta',get_meta_form($file));
+	$templates['viewer']->set('form_search',get_search_form($file));
 
 	/* set SimplyBibTeX strings */
 	$templates['viewer']->set('sbx_version',$cfg['version']);
