@@ -48,26 +48,23 @@ function get_file_form($current)
 	$menu  = '<form id="filelist" name="filelist" action="'.$_SERVER['PHP_SELF'].'" method="get">';
 	$menu .= '<select class="formitem" name="db" size="1" onchange="javascript:document.filelist.submit();">';
 
-	$directories = explode(',',$cfg['library']);
+	$directory = $cfg['library'];
 
-	foreach($directories as $directory) {
+	if ($dir = @opendir($directory)) { 
+		while (false !== ($file = readdir($dir))) 
+		{
+			if ($file != "." && $file != ".." && $file != "CVS" && !strstr($file,'.meta') &&
+				!strstr($file,'.meta')) {
 
-		if ($dir = @opendir($directory)) { 
-			while (false !== ($file = readdir($dir))) 
-			{
-				if ($file != "." && $file != ".." && $file != "CVS" && !strstr($file,'.meta') &&
-					!strstr($file,'.meta')) {
-
-					
-					$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
-					
-					$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file . ' (' . $directory . ')</option>'; 
-				};
-			} // while
-			closedir($dir);
-		} // if
+				
+				$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
+				
+				$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file . ' (' . $directory . ')</option>'; 
+			};
+		} // while
+		closedir($dir);
+	} // if
 		
-	};
 
 	$menu .= '</select></form>';	
 	return $menu;
