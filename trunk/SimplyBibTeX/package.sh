@@ -7,5 +7,5 @@ rm -f SimplyBibTeX/*.sh
 rm -f SimplyBibTeX/*.bat
 rm -f SimplyBibTeX/*.ppr
 
-tar cfjv SimplyBibTeX-`date +%d%m%Y`.tar.gz SimplyBibTeX
+tar cfjv SimplyBibTeX-`date +%d%m%Y`.tar.bz2 SimplyBibTeX
 zip -r SimplyBibTeX-`date +%d%m%Y` SimplyBibTeX
