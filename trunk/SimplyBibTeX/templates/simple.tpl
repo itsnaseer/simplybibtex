@@ -27,7 +27,8 @@
 		</div>
 		<div class="item_menu">
 			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | 
-			<span onclick="javascript:toggle('edit_<?=$number?>')">Edit</span>
+			<a href="#" onclick="javascript:toggle('edit_<?=$number?>')" title="Edit">Edit</a> |
+			<a href="#" onclick="javascript:toggle('comment_<?=$number?>')" title="Comment">Comment</a>
 		</div>
 
 		<div id="edit_<?=$number?>" class="hidden">

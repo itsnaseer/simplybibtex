@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<link rel="alternate" type="application/rss+xml" title="RSS for <?=$title?>" href="<?=$rss2?>"/>
@@ -81,11 +80,12 @@
 				border-top: 1px solid #f33;
 
 			}
-			#content {
+			#content {								
 				clear:both;
 			}
 
 			#container {
+				backgound-color:#eee;
 				width: 600px;
 				margin: 0px auto;
 				padding:1em;			
@@ -101,6 +101,7 @@
 				color: white;
 			}
 			#menu {
+				width:100%;
 				background-color: #666;
 				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				color: white;
@@ -120,24 +121,24 @@
 			}
 			#help {
 				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
-				color: #666;
-				background-color: #ffe;
+				color: #333;
+				background-color: #ffc;
 			}
 			#additemform {
-				background-color: #666;
+				background-color: #ccf;
 				padding:1em;
 			}
 
 			#metaform {
-				background-color: #666;
+				background-color: #cf9;
 				padding:1em;
 			}
 			#searchform {
-				background-color: #666;
+				background-color: #cf9;
 				padding:1em;
 			}
 			#uploadform {
-				background-color: #666;
+				background-color: #cff;
 				padding:1em;
 			}
 			#filelist {
@@ -149,15 +150,19 @@
 				padding:0.3em;
 			}
 			.item_menu {
-				background-color: #999;
-				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				color: white;
+				cursor: pointer;
 				padding: 0.5em;
+
+			}
+			.item_menu a:hover {
+				background-color: #999;
+				color: white;
 			}
 			.item_menu a {
-				color: white;
-				text-decoration : none;
-				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				padding:0.5em;				
+				text-decoration : none;				
 			}
 			.item_extended {
 				background-color: #efe;
@@ -176,18 +181,20 @@
 			<div id="header">
 				SimplyBibTeX
 			</div>
-			<div id="menu">
-			
-				<span>
-					<span title="Add an item to this database" onclick="javascript:toggle('additemform');">Add</span> |
-					<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
-					<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
-					<span title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
-					<?=$form_select?>
-				</span>
-				
-				<br style="clear:both;"/>
-
+			<table id="menu">
+				<tr>
+					<td>
+						<span title="Add an item to this database" onclick="javascript:toggle('additemform');">Add</span> |
+						<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
+						<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
+						<span title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
+					</td>
+					<td>
+						<span style="background:#eee"><?=$form_select?></span>
+					</td>
+				</tr>
+			</table>
+			<div>
 				<div id="additemform" class="hidden">
 					<?=$form_additem?>
 				</div>
@@ -203,8 +210,8 @@
 				<div id="help" class="hidden">
 					<?=$sbx_help?>
 				</div>
-				
 			</div>
+			
 			<div id="content">
 				<?=$content?>
 			</div>
