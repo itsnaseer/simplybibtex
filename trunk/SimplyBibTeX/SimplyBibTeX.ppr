@@ -45,13 +45,13 @@ SimplyBibTeX
 		config.inc
 [Open project files]
 0=index.php
-1=templates\simple.tpl
+1=include\globals.php
 [Selected Project Files]
 Main=
-Selected=templates\simple.tpl
+Selected=include\globals.php
 [index.php]
-TopLine=203
-Caret=1,77
-[templates\simple.tpl]
-TopLine=15
-Caret=52,42
+TopLine=12
+Caret=1,12
+[include\globals.php]
+TopLine=1
+Caret=35,27
