@@ -31,7 +31,7 @@
 		<div class="item_menu">
 			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a>&nbsp;
 			<span class="link" onclick="javascript:toggle('edit_<?=$number?>')" title="Edit">Edit</span>&nbsp;
-			<span onclick="javascript:toggle('comment_<?=$number?>')" title="Comment">Comment</span>
+			<span class="link" onclick="javascript:toggle('comment_<?=$number?>')" title="Comment">Comment</span>
 		</div>
 
 		<div id="edit_<?=$number?>" class="hidden">
@@ -53,6 +53,26 @@
 				
 			</form>
 		</div>		
+
+		<div id="comment_<?=$number?>" class="hidden">
+
+			<form class="item_comment" action="include/commit.php" method="post">
+		
+				<input type="hidden" name="command" value="comment_item" />
+				<input type="hidden" name="id" value="<?=$number?>" />
+				<input type="hidden" name="db" value="<?=$db?>" />
+
+				<fieldset>
+					<legend>Add Comment</legend>
+					<textarea type="text" rows="10" cols="70" name="item"></textarea>
+					<input type="submit" value="Submit" />
+					<input type="reset" value="Forget" />					
+				</fieldset>				
+				
+			</form>
+
+			
+		</div>
 
 	</div>
 </div>
