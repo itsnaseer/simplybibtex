@@ -24,5 +24,21 @@ function get_get($name,$default)
 	return $default;		
 };
 
+/* function to get around old PHP <4.3.0 versions */
+function glob_func($path,$files)
+{
+	$result  = array();
+
+	if ($dir = opendir($path)) {
+
+		while ($file = readdir($dir)) {
+
+			if (fnmatch($files,$file)) array_push($result, $path .'/'. $file);
+		}
+		closedir($dir);
+	}
+
+	return $result;	
+}
 
 ?>
