@@ -5,7 +5,7 @@
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
 	<channel>
 		<title><?=$title?></title>
-		<link><?=$link?></link>
+		<link><?=$baselink?></link>
 		<description>SimplyBibTeX Feed</description>
 		<webMaster>webmaster@technotecture.com</webMaster>
 		<lastBuildDate><?=$dbtime?></lastBuildDate>

@@ -164,8 +164,11 @@ function parse()
 		return $output;
 	}
 
-	function render_id($template,$id)
+	function render_id($template,$encode,$id)
 	{
+
+		$trans = get_html_translation_table(HTML_ENTITIES);
+
 		// fill the template engine with the respective values
 		$template->set("type",$this->types[$id]);
 		
@@ -202,6 +205,7 @@ function parse()
 		$template->make();
 
 		$output .= $template->output;
+
 		return $output;
 	}
 }
