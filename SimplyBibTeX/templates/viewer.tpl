@@ -174,6 +174,9 @@
 				background-color: #eee;
 				
 			}
+			.menu_item:hover {
+				background-color: #999;
+			}
 		</style>
 	</head>
 	<body>
@@ -184,10 +187,10 @@
 			<table id="menu">
 				<tr>
 					<td>
-						<span title="Add an item to this database" onclick="javascript:toggle('additemform');">Add</span> |
-						<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
-						<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
-						<span title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
+						<span class="menu_item" title="Add an item to this database" onclick="javascript:toggle('additemform');">Add</span> |
+						<span class="menu_item" title="Click to search the database" onclick="javascript:toggle('searchform');">Find</span> |
+						<span class="menu_item" title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
+						<span class="menu_item" title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
 					</td>
 					<td>
 						<span style="background:#eee"><?=$form_select?></span>

@@ -1,7 +1,12 @@
 <h2>SimplyBibTeX Help</h2>
-
 <h3>About</h3>
 SimplyBibTeX is a very simple but extremly flexible publishing system for BibTeX files. It allows to store manage, comment and link a bibliographic database.
+
+<h3>Find Something?</h3>
+You need to enter the field you searching for in the search request. 
+e.g.:
+<code>year=1997</code> will return all entries from year 1997 or 
+<code>year=97</code>will return entries from the years 1797 997 or 2097 
 
 <h3>Features</h3>
 - BibTeX Parser
@@ -12,13 +17,9 @@ SimplyBibTeX is a very simple but extremly flexible publishing system for BibTeX
 - per item linking
 - uploading in separate directory
 - store meta data per database (comments, whatever you want)
+- search the database
 
 <h3>Requirements</h3>
 - PHP 4.x or 5.x
 
-<h3>Installation</h3>
-To be written!
 
-<h3>Planned Features</h3>
-- User managment
-- Editing of databases

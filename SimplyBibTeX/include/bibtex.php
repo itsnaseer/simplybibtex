@@ -223,9 +223,31 @@ function parse() {
 
 		return $output;
 	}
+	
+	function render_search(&$template, $encode, $fallbacks, $search)
+	{
+		$output = NULL;
+		
+		$atoms = explode('=',$search);
+		
+		for ($i = 0; $i <= $this->count; $i++ ) {
+			
+			if (isset($this->items[$atoms[0]][$i]))
+						
+
+				if (strstr($this->items[$atoms[0]][$i],$atoms[1])) {
+					
+					$output .= $this->render_id($template,$encode,$i,$trans);
+				
+				}
+		}	
+		
+		return $output;
+		
+	}
 
 
-	function render_all(&$template,$encode,$fallbacks)
+	function render_all(&$template, $encode, $fallbacks, &$trans)
 	{	
 		$output = NULL;
 		

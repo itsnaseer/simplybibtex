@@ -55,7 +55,7 @@ SimplyBibTeX
 8=templates\simple.tpl
 [Selected Project Files]
 Main=
-Selected=include\globals.php
+Selected=include\bibtex.php
 [index.php]
 TopLine=7
 Caret=39,17
@@ -69,8 +69,8 @@ Caret=32,75
 TopLine=1
 Caret=69,17
 [include\bibtex.php]
-TopLine=204
-Caret=3,231
+TopLine=168
+Caret=1,240
 [include\view.php]
 TopLine=1
 Caret=1,11
@@ -78,7 +78,7 @@ Caret=1,11
 TopLine=1
 Caret=1,26
 [templates\viewer.tpl]
-TopLine=163
+TopLine=141
 Caret=27,141
 [templates\simple.tpl]
 TopLine=11

@@ -132,10 +132,10 @@ function get_bibtex_form()
 /* generates the internal help */
 function get_search_form($current)
 {
-	$string = "No Implemented!";
-	$form  = '<form action="include/commit.php" method="post">';
-	$form .= '<input type="text" name="id_string" size="40" maxlength="200" value="'.$string.'"/>';
-	$form .= '<input type="hidden" name="command" value="search"/>';
+	$string = "";
+	$form  = '<form action="'.$_SERVER['PHP_SELF'].'" method="get">';
+	$form .= '<input type="text" name="find" size="40" maxlength="200" value="'.$string.'"/>';
+	$form .= '<input type="hidden" name="db" value="'.$current.'"/>';
 	$form .= '<input type="submit" value="Go" />';
 	$form .= '</form>';
 	
@@ -189,6 +189,8 @@ if (!$feed & !$pdf)
 		
 	$file = stripslashes($file);
 	
+	$search = get_get('find',NULL);
+	
 
 	$bib = new BibTeX($file);
 	$bib->parse();
@@ -227,7 +229,7 @@ if (!$feed & !$pdf)
 	$viewer = new View();
 
 
-	$output = $viewer->get_html('BibTeX Viewer '.$file,$bib,$templates,$id);
+	$output = $viewer->get_html('BibTeX Viewer '.$file,$bib,$templates,$id, $search);
 
 	
 
