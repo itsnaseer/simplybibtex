@@ -17,7 +17,7 @@ class View {
 	function View() {}
 
 
-	function get_html($title, $database, $templates, $menu)
+	function get_html($title, $database, $templates)
 	{
 
 		$encode = TRUE;
@@ -26,7 +26,6 @@ class View {
 
 		$templates[viewer]->set("content",$content);
 		$templates[viewer]->set("title",$title);
-		$templates[viewer]->set("menu",$menu);
 
 		$templates[viewer]->make();
 
@@ -36,7 +35,7 @@ class View {
 	function get_rss($title, $database, $templates, $link)
 	{
 		
-		$fallbacks = array('url'=>'http://www.technotecture.com'
+		$fallbacks = array('url'=>$link
 		);
 
 		$encode = TRUE;

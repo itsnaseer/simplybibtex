@@ -3,11 +3,21 @@
 	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=$rss2?>"/>
+		<link rel="alternate" type="application/atom+xml" title="Atom" href="<?=$atom?>"/>
 
 		<title><?=$title?></title>
 		<script type="text/javascript">
 			function changeClass(id,newclass) {
 				document.getElementById(id).className = newclass;
+			}
+			function toggle(id) {
+				if (document.getElementById(id).className == 'visible') {
+					document.getElementById(id).className = 'hidden';
+				} else {
+					document.getElementById(id).className = 'visible';
+				}
+					
 			}
 		</script>
 		<style type="text/css">
@@ -17,8 +27,9 @@
 			.visible {
 				display: block;
 				background-color: #eff;
-				padding: 1em;
+				padding: 0.5em;
 				margin:0.2em;
+				border: 1px #eee solid;
 			}
 			.item {
 				font: 8pt "Lucida Grande", Tahoma, Helvetica, sans-serif;
@@ -31,6 +42,10 @@
 			}
 			.even {
 				background-color: #ddd;
+			}
+			.formitem {
+				background-color: #666;
+				color: white;
 			}
 			#menu {
 				color: white;
@@ -50,6 +65,16 @@
 				padding: 1em;
 				background-color: #e33;
 			}
+			#footer {
+				font: normal 6pt "Lucida Grande", Tahoma, Helvetica, sans-serif;
+				color: white;
+				padding: 0.5em;
+				background-color: #666;
+			}
+			#footer a {
+				font: bold 6pt "Lucida Grande", Tahoma, Helvetica, sans-serif;
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
@@ -58,9 +83,12 @@
 				SimplyBibTeX
 			</div>
 			<div id="menu">
-				<?=$menu?>
+				<?=$selector?>
 			</div>
 			<?=$content?>
+			<div id="footer">
+				<a href="<?=$rss2?>">RSS</a> | <a href="<?=$atom?>">Atom</a> | SimplyBibTeX &copy; Copyrights 2005, Hartmut Seichter | <?=$time?>
+			</div>
 		</div>
 	</body>
 </html>

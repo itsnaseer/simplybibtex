@@ -38,21 +38,32 @@ function parse()
 	
 	$this->count=-1;
 
-	for ($lineindex=0;$lineindex<800;$lineindex++)
+	$lineindex = 0;
+
+	while(1) 
 	{
+		$lineindex++;
+
 		if (feof($this->fid)){break;}
 		$line=trim(fgets($this->fid,10240));
+
+		$raw_line = $line;
 
 		$line=str_replace("'","`",$line);
 		$seg=str_replace("\"","`",$line);
 		$ps=strpos($seg,'=');
 		$segtest=strtolower($seg);
 		if (strpos($segtest,'@string')!==false) {continue;}
+		
+		// pybliographer comments
+		if (strpos($segtest,'@comment')!==false) {continue;}
+
 		if (strpos($seg,'%%')!==false) {continue;}
         
 		if ($seg[0]=='@')
         {
                 $this->count++;
+				$this->items[raw][$this->count] .= $raw_line; 
                 $ps=strpos($seg,'@');
                 $pe=strpos($seg,'{');
                 $this->types[$this->count]=trim(substr($seg, 1,$pe-1));
@@ -60,9 +71,10 @@ function parse()
         } // #of item increase
         elseif ($ps!==false ) // one field begins
         {
+				$this->items[raw][$this->count] .= $raw_line; 
                 $ps=strpos($seg,'=');
                 $fieldcount++;
-				$this->items[raw][$this->count] .= $seg; 
+				
                 $var[$fieldcount]=strtolower(trim(substr($seg,0,$ps)));
                 if ($var[$fieldcount]=='pages')
                 {
@@ -143,7 +155,7 @@ function parse()
 			$template->set("page-end",$this->items[page-end][$i]);		
 			$template->set("pages",$this->items[pages][$i]);
 			$template->set("address",strtr($this->items[address][$i],$trans));
-			$template->set("raw",$this->items[raw][$i]);
+			$template->set("raw",strtr($this->items[raw][$i],$trans));
 
 			$template->make();
 

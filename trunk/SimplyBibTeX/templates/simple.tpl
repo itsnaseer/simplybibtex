@@ -1,6 +1,6 @@
 <div class="<?=$oddeven?> item">
 
-	<div onmouseover="javascript:changeClass('notes_<?=$number?>','visible');" onmouseout="javascript:changeClass('notes_<?=$number?>','hidden');" style="float:right;background-color:#e00;color:white;padding:0.25em;" >&gt;</div>
+	<div onclick="javascript:toggle('notes_<?=$number?>');" title="Click to expand/collapse" style="float:right;background-color:#e00;color:white;padding:0.25em;" >&lt;&gt;</div>
 	
 	<?=$author?>, (<?=$year?>) <i><?=$title?>, <?=$journal?></i>
 
@@ -15,7 +15,7 @@
 		<br/>
 		<b>URL:</b>&nbsp;<a href="<?=$url?>" target="_blank" title="<?=$title?>"><?=$url?></a>
 		<br/>
-		<b>BibTeX:</b>&nbsp;<?=$raw?>
+		<b>BibTeX:</b><br/><code><?=$raw?></code>
 		<br/>
 	</div>
 </div>
