@@ -39,9 +39,7 @@ class Admin {
 
 		$template = new Template($cfg['templates'].'/install.tpl');
 
-		$output = "";
-
-		
+		$output = "";		
 
 		/* try to create a data folder */
 		if (!file_exists($cfg['library'])) {
