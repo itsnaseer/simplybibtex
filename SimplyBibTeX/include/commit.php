@@ -28,7 +28,7 @@ if ($command == 'upload')
 
 	if ($error == 0)
 	{
-		move_uploaded_file($tmp,'../' . $cfg['uploads'] . '/' . $name);
+		move_uploaded_file($tmp,'../' . $cfg['library'] . '/' . $name);
 		/* maybe load it directly? */
 		$location = '../';
 
