@@ -6,6 +6,7 @@
 	<link rel="alternate" type="text/html" href="<?=$baselink?>" />
 	<tagline>Most Simple PHP BibTeX</tagline>
 	<copyright>Copyright 2005</copyright>
+	<modified><?=$dbtime?></modified>
 	<generator url="http://technotecture.com/software/SimplyBibTeX" version="0.1">SimplyBibTeX</generator>
 	<?=$content?>
 </feed>
