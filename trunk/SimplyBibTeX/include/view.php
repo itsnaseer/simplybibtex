@@ -17,12 +17,13 @@ class View {
 	function View() {}
 
 
-	function get_html($title, $database, $templates)
+	function get_html($title, $database, $templates, $id)
 	{
 
 		$encode = TRUE;
 
-		$content = $database->render_all($templates[content],$encode,$NULL);
+		
+		$content = (!$id) ? $database->render_all($templates[content],$encode,$NULL) : $database->render_id($templates[content],$encode,$id);
 
 		$templates[viewer]->set("content",$content);
 		$templates[viewer]->set("title",$title);

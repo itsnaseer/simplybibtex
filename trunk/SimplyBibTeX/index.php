@@ -53,17 +53,29 @@ function get_rss_link($directory,$current)
 
 function get_atom_link($directory,$current)
 {
+	
 	return $_PHP['SELF'].'?feed=atom&amp;db='.$current;
 };
 
 
+function get_link($current)
+{
+	$trans = get_html_translation_table(HTML_ENTITIES);
+	$urls = explode('?','http://'.strtr($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],$trans));
 
-
+	return $urls[0];
+}
 
 $feed = $_GET['feed'];
 
 if (!$feed)
 {
+
+	$file = $_POST['id'];
+
+	if (!$file)
+		$file = $_GET['id'];
+
 	$file = $_POST['db'];
 
 	if (!$file)
@@ -94,7 +106,7 @@ if (!$feed)
 	$viewer = new View();
 
 
-	$output = $viewer->get_html('BibTeX Viewer '.$file,$bib,$templates);
+	$output = $viewer->get_html('BibTeX Viewer '.$file,$bib,$templates,$id);
 
 	
 
@@ -118,8 +130,8 @@ if (!$feed)
 		$templates[content] = new Template('templates/atom_item.tpl');
 		header('Content-Type: application/xml');
 	};
-	$templates[viewer]->set('link',$_SERVER['REQUEST_URI']);
-	$templates[content]->set('link',$_SERVER['HTTP_HOST']);
+	$templates[viewer]->set('link',get_link($file));
+	$templates[content]->set('link',get_link($file));
 
 	$templates[viewer]->set('time',date("r", time())); 
 	$templates[viewer]->set('dbtime',date("r", filemtime($file))); 
