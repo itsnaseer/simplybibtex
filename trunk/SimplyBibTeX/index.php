@@ -204,6 +204,7 @@ if (!$feed & !$pdf)
 	$templates['viewer']->set('baselink',get_link($file));
 	$templates['content']->set('link',get_link($file));
 	$templates['content']->set('db',$file);
+	$templates['viewer']->set('file',$file);
 
 	/* time */
 	$templates['viewer']->set('time',date("r", time())); 

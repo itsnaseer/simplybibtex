@@ -78,6 +78,7 @@
 				background-color: #e33;
 				border-bottom: 1px solid #d33;
 				border-top: 1px solid #f33;
+				-moz-border-radius: 7px;
 
 			}
 			#content {								
@@ -149,14 +150,20 @@
 			.item_short {
 				padding:0.3em;
 			}
+			
 			.item_menu {
 				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
-				color: white;
+				color: black;
 				cursor: pointer;
 				padding: 0.5em;
-
+			}	
+			
+			.link {
+				padding:0.5em;				
+				text-decoration : none;	
 			}
-			.item_menu a:hover {
+			
+			.item_menu a:hover, .link:hover {
 				background-color: #999;
 				color: white;
 			}
@@ -177,6 +184,9 @@
 			.menu_item:hover {
 				background-color: #999;
 			}
+			#menu a {
+				text-decoration : none;
+			}
 		</style>
 	</head>
 	<body>
@@ -190,7 +200,8 @@
 						<span class="menu_item" title="Add an item to this database" onclick="javascript:toggle('additemform');">Add</span> |
 						<span class="menu_item" title="Click to search the database" onclick="javascript:toggle('searchform');">Find</span> |
 						<span class="menu_item" title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
-						<span class="menu_item" title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span>
+						<span class="menu_item" title="Learn more about SimplyBibTeX" onclick="javascript:toggle('help');">Help</span> |
+						<a href="<?=$baselink?>?db=<?=$file?>" class="menu_item" title="Show all items in the database">Show All</span>
 					</td>
 					<td>
 						<span style="background:#eee"><?=$form_select?></span>
