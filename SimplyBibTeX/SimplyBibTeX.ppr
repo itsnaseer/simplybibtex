@@ -24,9 +24,7 @@ HTServer=
 [Project tree]
 SimplyBibTeX
 	+SimplyBibTeX
-		-bibs
-			bibs\example.bib
-		-docs
+		+docs
 			docs\help.inc
 		+include
 			include\bibtex.php
@@ -35,7 +33,7 @@ SimplyBibTeX
 			include\template.php
 			include\view.php
 		+templates
-			-images
+			+images
 				templates\images\toggle.gif
 			templates\atom_item.tpl
 			templates\atom_viewer.tpl
@@ -45,16 +43,15 @@ SimplyBibTeX
 			templates\viewer.tpl
 		index.php
 		config.inc
-		uploads\Hoover.bib
 [Open project files]
-0=package.bat
-1=package.sh
+0=index.php
+1=templates\simple.tpl
 [Selected Project Files]
 Main=
-Selected=package.bat
-[package.bat]
-TopLine=1
-Caret=1,2
-[package.sh]
-TopLine=1
-Caret=1,5
+Selected=templates\simple.tpl
+[index.php]
+TopLine=203
+Caret=1,77
+[templates\simple.tpl]
+TopLine=15
+Caret=52,42
