@@ -60,6 +60,8 @@ function parse() {
 	$fieldcount = -1;
 	
 	$lines = file($this->filename);
+
+	if (!$lines) return;
 	
 	foreach($lines as $line) {
 	

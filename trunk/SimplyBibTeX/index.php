@@ -13,6 +13,16 @@
 require_once('include/bibtex.php');
 require_once('include/view.php');
 require_once('include/globals.php');
+require_once('include/admin.php');
+
+$admin = new Admin();
+
+if (!$admin->isInstalled()) {
+
+	$admin->doInstall();
+} else {
+
+
 
 
 function get_post($name,$default)
@@ -189,7 +199,7 @@ $output = '';
 $file = get_post('db',NULL);
 
 if (!$file)
-	$file = get_get('db',$cfg['database']);
+	$file = get_get('db',Property::get($cfg['config'],'default'));
 
 /* if the request does not ask for a feed it renders XHTML  */
 if (!$feed & !$pdf)
@@ -306,5 +316,7 @@ if (!$feed & !$pdf)
 
 /* output the rendered content */
 echo $output;
+
+} // is installed
 
 ?>
