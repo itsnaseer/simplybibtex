@@ -22,6 +22,7 @@ $cfg['helpfile']				= 'docs/help.inc';
 
 /* default data forlder settings */
 $cfg['library']		= "data";
+$cfg['cache']		= "$cfg[library]";
 $cfg['templates']	= "templates";
 $cfg['config']		= "$cfg[library]/index.meta";
 

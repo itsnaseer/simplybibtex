@@ -217,7 +217,7 @@ function parse() {
 		$this->set($template,'linebegin',	$id,"",$encode,$trans);
 		$this->set($template,'lineend',		$id,"",$encode,$trans);
 
-		$template->make();
+		$template->fetch(true);
 
 		$output .= $template->output;
 
