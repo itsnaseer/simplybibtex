@@ -3,8 +3,8 @@
 	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-		<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=$rss2?>"/>
-		<link rel="alternate" type="application/atom+xml" title="Atom" href="<?=$atom?>"/>
+		<link rel="alternate" type="application/rss+xml" title="RSS for <?=$title?>" href="<?=$rss2?>"/>
+		<link rel="alternate" type="application/atom+xml" title="Atom for <?=$title?>" href="<?=$atom?>"/>
 
 		<title><?=$title?></title>
 		<script type="text/javascript">
@@ -21,11 +21,21 @@
 			}
 		</script>
 		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
 			body {
 				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
 				margin: 1em 0;
 				padding: 0;
 				text-align: center;	
+			}
+			h2 {
+				font: bold 9pt "Lucida Grande", Arial, Helvetica, sans-serif;
+			}
+			h3 {
+				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
 			}
 			a {
 				color: black;
@@ -43,12 +53,10 @@
 				margin:0.2em;
 				border: 1px #999 solid;
 			}
-			.item {
-				font: 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
-				padding:0.5em;#submenu a {
-				font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
-				color: white;
-			}
+			.item {				
+				padding:0.5em;
+				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+				color: black;
 				border-bottom: 1px #ccc solid;
 				border-top: 1px #fff solid;
 			}
@@ -93,6 +101,7 @@
 				color: white;
 				padding:0.75em;
 				clear:both;
+				border-bottom: 
 			}
 			#menu a {
 				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
@@ -107,6 +116,10 @@
 				color: #666;
 				background-color: #ffe;
 			}
+			#metaform {
+				background-color: #ffe;
+				padding:1em;
+			}
 			#searchform {
 				background-color: #ffe;
 				padding:1em;
@@ -115,14 +128,9 @@
 				background-color: #fee;
 				padding:1em;
 			}
-			#filelist {	
-				width:150px;
-				vertical-align:top;
-				float:right;
-				clear:both;
-			}
 			#filelist select {
 				border:0;
+				display:inline;
 			}
 			.item_menu {
 				background-color: #999;
@@ -141,6 +149,10 @@
 				border: 1px solid #999;
 				padding:0.5em;
 			}
+			.comment {
+				background-color: #eee;
+				
+			}
 		</style>
 	</head>
 	<body>
@@ -149,7 +161,7 @@
 				SimplyBibTeX
 			</div>
 			<div id="menu">
-				<?=$form_select?>
+				<?=$form_select?>&nbsp;&nbsp;&nbsp;&nbsp;
 				<span title="Click to search the database" onclick="javascript:toggle('searchform');">Search</span> |
 				<span title="Upload your BibTeX file" onclick="javascript:toggle('uploadform');">Upload</span> |
 				<span title="edit meta information" onclick="javascript:toggle('metaform');">Meta</span> |

@@ -33,11 +33,9 @@ function get_get($name,$default)
 /* generates a form to change the BibTeX file */
 function get_file_form($current)
 {
-
 	global $cfg;
 
-	$menu  = '<form id="filelist" name="filelist" method="post" action="">';
-	$menu .= '<select class="formitem" name="db" size="1" onchange="filelist.submit()">';
+	$menu = '<select class="formitem" name="db" size="1" onchange="javascript:document.filelist.submit();">';
 
 	$directories = explode(',',$cfg['libraries']);
 
@@ -49,8 +47,11 @@ function get_file_form($current)
 				if ($file != "." && $file != ".." && $file != "CVS" && !strstr($file,'.meta') &&
 					!strstr($file,'.meta')) {
 
+					
 					$sel_html = ($directory .'/'. $file == $current) ? 'selected="selected"' : '';
+					
 					$menu .= '<option value="' . $directory .'/'. $file . '" ' . $sel_html . '>' . $file . ' (' . $directory . ')</option>'; 
+					
 					
 				};
 			} // while
@@ -59,9 +60,7 @@ function get_file_form($current)
 		
 	};
 
-	$menu .= '</select>';
-	$menu .= '</form>';
-
+	$menu .= '</select>';	
 	return $menu;
 }
 
@@ -76,6 +75,7 @@ function get_upload_form()
 	
 	return $form;
 }
+
 
 /* get the meta */
 function get_meta($file) {
@@ -128,6 +128,7 @@ function get_bibtex_form()
 /* generates the internal help */
 function get_search_form($current)
 {
+	$string = "No Implemented!";
 	$form  = '<form action="include/commit.php" method="post">';
 	$form .= '<input type="text" name="id_string" size="40" maxlength="200" value="'.$string.'"/>';
 	$form .= '<input type="hidden" name="command" value="search"/>';
@@ -167,22 +168,23 @@ $feed = get_get('feed',NULL);
 /* check if we been asked to render a PDF */
 $pdf = get_get('pdf',NULL);
 
+$templates = array();
+
+$output = '';
+
+$file = get_post('db',NULL);
+
+if ($file == NULL)
+	$file = get_get('db',$cfg['database']);
+
 /* if the request does not ask for a feed it renders XHTML  */
 if (!$feed & !$pdf)
 {
-	$id = get_post('id',NULL);
 
-	/* check if we been asked to render only a single id */
-	if (!$id !== NULL)
-		$id = get_get('id',NULL);
-
-	$file = get_post('db',NULL);
-
-	if (!$file)
-		$file = get_get('db',NULL);
-
-	if (!$file) 
-		$file = $cfg['database'];
+	$id = get_get('id',-1);
+	
+		
+	// echo $file;
 
 	$file = stripslashes($file);
 	
@@ -260,7 +262,7 @@ if (!$feed & !$pdf)
 
 	/* set SimplyBibTeX strings */
 	$templates['viewer']->set('sbx_version',$cfg['version']);
-	$templates['viewer']->set('sbx_copy',$cfg['copy']);
+	// $templates['viewer']->set('sbx_copy',$cfg['copy']);
 
 
 	/* set up internal links */
@@ -277,7 +279,7 @@ if (!$feed & !$pdf)
 	$viewer = new View();
 
 	/* generate the feed output through the templates */
-	$output .= $viewer->get_rss('BibTeX Viewer '.$file,$bib,$templates,$_PHP['SELF']);
+	$output .= $viewer->get_rss('BibTeX Viewer '.$file,$bib,$templates,$_SERVER['PHP_SELF']);
 	
 	/* let the client know how many bytes we gonna send */
 	header('Content-Length: ' . strlen($output));
