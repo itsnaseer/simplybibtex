@@ -20,8 +20,9 @@ class View {
 	function get_html($title, $database, $templates, $id, $search)
 	{
 	
+		if ($templates['viewer']->is_cached()) return $templates['viewer']->fetch();
+	
 		$trans = get_html_translation_table(HTML_ENTITIES);
-
 
 		$encode = TRUE;
 
@@ -44,6 +45,7 @@ class View {
 
 	function get_rss($title, $database, $templates, $link)
 	{
+		if ($templates['viewer']->is_cached()) return $templates['viewer']->fetch();
 		
 		$fallbacks = array('url'=>$link
 		);
