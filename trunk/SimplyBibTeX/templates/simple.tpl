@@ -38,6 +38,8 @@
 		</div>
 		]]>
 		<div id="edit_<?=$number?>" class="hidden">
+		
+			Line : <?=$linebegin?>-<?=$lineend?> in <?=$db?>
 			<form class="item_edit" action="include/commit.php" method="post">
 
 				<input type="hidden" name="linebegin" value="<?=$linebegin-1?>" />
