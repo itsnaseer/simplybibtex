@@ -164,40 +164,44 @@ function parse()
 		return $output;
 	}
 
-	function render_filter($template,$filter)
+	function render_id($template,$id)
 	{
-		for ($i = 0; $i <= $this->count; $i++)
+		// fill the template engine with the respective values
+		$template->set("type",$this->types[$id]);
+		
+		if ($id % 2) 
+			$template->set("oddeven","odd");
+		else
+			$template->set("oddeven","even");
+
+		$template->set("number",$id);
+
+		$template->set("journal",$this->items[journal][$id].$this->items[booktitle][$id]);
+		$template->set("author",$this->items[author][$id]);
+		$template->set("title",strtr($this->items[title][$id],$trans));
+		$template->set("volume",$this->items[volume][$id].$this->items[chapter][$id]);
+
+		if ($this->items[url][$id])
 		{
-			// fill the template engine with the respective values
-			$template->set("type",$this->types[$i]);
-			
-			if ($i % 2) 
-				$template->set("oddeven","odd");
-			else
-				$template->set("oddeven","even");
-
-			$template->set("number",$i);
-
-			$template->set("journal",$this->items[journal][$i].$this->items[booktitle][$i]);
-			$template->set("author",$this->items[author][$i]);
-			$template->set("title",$this->items[title][$i]);
-			$template->set("volume",$this->items[volume][$i].$this->items[chapter][$i]);
-			$template->set("url",$this->items[url][$i]);
-			$template->set("note",$this->items[note][$i]);
-			$template->set("abstract",$this->items[abstract][$i]);
-			$template->set("year",$this->items[year][$i]);
-			$template->set("group",$this->items[folder][$i]);
-			$template->set("publisher",$this->items[publisher][$i]);
-			$template->set("page-start",$this->items[page-start][$i]);
-			$template->set("page-end",$this->items[page-end][$i]);		
-			$template->set("pages",$this->items[pages][$i]);
-			$template->set("address",$this->items[address][$i]);
-			$template->set("raw",$this->items[raw][$i]);
-
-			$template->make();
-
-			$output .= $template->output;
+			$template->set("url",$this->items[url][$id]);
+		} else
+		{
+			$template->set("url",$fallbacks[url]);
 		}
+		$template->set("note",$this->items[note][$id]);
+		$template->set("abstract",$this->items[abstract][$id]);
+		$template->set("year",$this->items[year][$id]);
+		$template->set("group",$this->items[folder][$id]);
+		$template->set("publisher",$this->items[publisher][$id]);
+		$template->set("page-start",$this->items[page-start][$id]);
+		$template->set("page-end",$this->items[page-end][$id]);		
+		$template->set("pages",$this->items[pages][$id]);
+		$template->set("address",strtr($this->items[address][$id],$trans));
+		$template->set("raw",strtr($this->items[raw][$id],$trans));
+
+		$template->make();
+
+		$output .= $template->output;
 		return $output;
 	}
 }
