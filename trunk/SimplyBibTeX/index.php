@@ -1,37 +1,57 @@
 <?php 
-
+// ---------------------------------------------------------------------------
+// SimplyBibTeX - simple PHP BibTeX viewer
+// ---------------------------------------------------------------------------
+// Module			: example for the interface
+// Description		: implements a very simple viewer interface
+// Author			: Hartmut Seichter
+// License			: GPL
+// CVS				: $Id$
+// ---------------------------------------------------------------------------
 require_once('include/bibtex.php');
 require_once('include/view.php');
 
 
-function get_menu($directory)
+function get_file_menu($directory,$current)
 {
-	$count = 0;
+
+	$menu .= '<form name="filelist" method="POST">';
+	$menu .= '<select name="db" size="1" onChange="filelist.submit()">';
+
 	if ($dir = opendir($directory)) { 
 		while (false !== ($file = readdir($dir))) 
 		{
-			if ($file != "." && $file != "..") {
-           		$filelist[$count] = $file;
-				$count++;
+			if ($file != "." && $file != ".." && $file != "CVS") {
+
+				$sel_html = ($directory .'/'. $file == $current) ? 'selected' : '';
+				$menu .= '<option value="' . $file . '" ' . $sel_html . '>' . $file.'</option>'; 
+				
 			};
 		} // while
 	} // if
 	closedir($dir);
-	$menu .= '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
 
-	$menu .= '<select="filename">';
-	for ($i = 0; $i < $count; $i++) {
-		$menu .= '<option value="' . $filelist[$i] . '">'.$filelist[$i].'</option>'; 
-	}
 	$menu .= '</select>';
-	$menu .= '<input type="submit" name="Select">';
 	$menu .= '</form>';
 
 	return $menu;
 }
 
+function get_search_menu($directory,$current)
+{
+}
 
-$file = $_POST['filename'];
+
+function get_menu($directory,$current)
+{
+	$menu .= get_file_menu($directory,$current);
+	return $menu;
+}
+
+$file = $_POST['db'];
+
+if (!$file)
+	$file = $_GET['db'];
 
 if (!$file) 
 	$file = 'bibs/example.bib';
@@ -45,7 +65,7 @@ $bib->parse();
 $templates[viewer] = new Template('templates/viewer.tpl');
 $templates[content] = new Template('templates/simple.tpl');
 
-$viewer = new View('BibTeX Viewer',$bib,$templates,get_menu('bibs'));
+$viewer = new View('BibTeX Viewer '.$file,$bib,$templates,get_menu('bibs',$file));
 
 
 ?>

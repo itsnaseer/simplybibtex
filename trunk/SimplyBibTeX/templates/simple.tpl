@@ -11,8 +11,7 @@
 		<br/>
 		<b>Location:</b>&nbsp;<?=$address?>
 		<br/>
-		<b>BibTeX:</b><code>
-			<?=$raw?>
-		</code>
+		<b>URL:</b>&nbsp;<a href="<?=$url?>" target="_blank" title="<?=$title?>"><?=$url?></a>
+		<br/>
 	</div>
 </div>

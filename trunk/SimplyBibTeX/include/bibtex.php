@@ -1,11 +1,13 @@
 <?php
 // ---------------------------------------------------------------------------
-// Module:			
-// Author: 			Hartmut Seichter
-// Purpose:			BibTeX parser
-// Acknowledgement: Zhe Wu at Univ. of Rochester, http://qcite.com
-// License:			GPL
-// 
+// SimplyBibTeX - simple PHP BibTeX viewer
+// ---------------------------------------------------------------------------
+// Module			: bibtex parser class
+// Description		: generates a 2d array of all bibtex items 
+// Author			: Hartmut Seichter
+// Acknowledgement	: Zhe Wu at Univ. of Rochester, http://qcite.com
+// License			: GPL
+// CVS				: $Id$
 // ---------------------------------------------------------------------------
 
 require_once('template.php');
