@@ -1,6 +1,9 @@
 <div class="<?=$oddeven?> item">
 
-	<div onclick="javascript:toggle('notes_<?=$number?>');" title="Click to know more about <?=$title?>" style="float:right;clear:left;"><img src="templates/images/toggle.gif" width="16" height="16" /></div>
+	<div onclick="javascript:toggle('notes_<?=$number?>');" title="Click to know more about <?=$title?>" style="float:right;clear:left;">
+		<img src="templates/images/toggle.gif" width="16" height="16" />
+	</div>
+	
 	<div class="item_short">
 	<?=$author?>, (<?=$year?>) <i><?=$title?>, <?=$journal?></i>
 	</div>
@@ -26,21 +29,20 @@
 			<b>Notes:</b>&nbsp;<?=$notes?>
 		</div>
 		<div class="item_menu">
-			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | 
-			<a href="#" onclick="javascript:toggle('edit_<?=$number?>')" title="Edit">Edit</a> |
-			<a href="#" onclick="javascript:toggle('comment_<?=$number?>')" title="Comment">Comment</a>
+			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a>&nbsp;
+			<span class="link" onclick="javascript:toggle('edit_<?=$number?>')" title="Edit">Edit</span>&nbsp;
+			<span onclick="javascript:toggle('comment_<?=$number?>')" title="Comment">Comment</span>
 		</div>
 
 		<div id="edit_<?=$number?>" class="hidden">
 		
 			<form class="item_edit" action="include/commit.php" method="post">
 				
-				
 				<input type="hidden" name="linebegin" value="<?=$linebegin?>" />
 				<input type="hidden" name="lineend" value="<?=$lineend?>" />
 				<input type="hidden" name="command" value="update_item" />
 				<input type="hidden" name="db" value="<?=$db?>" />
-				
+
 				<fieldset>
 					<legend>BibTeX Entry</legend>
 					<input type="submit" value="Update" />

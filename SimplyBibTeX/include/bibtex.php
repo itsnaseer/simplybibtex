@@ -227,9 +227,8 @@ function parse() {
 	function render_search(&$template, $encode, $fallbacks, $search)
 	{
 		$output = NULL;
-		
 		$atoms = explode('=',$search);
-		
+
 		for ($i = 0; $i <= $this->count; $i++ ) {
 			
 			if (isset($this->items[$atoms[0]][$i]))
