@@ -13,9 +13,12 @@
 $cfg['major'] 					= '0';
 $cfg['minor'] 					= '1';
 $cfg['build'] 					= '2';
+
+/* version */
 $cfg['version'] 				= "$cfg[major].$cfg[minor].$cfg[build]";
-$cfg['web_url'] 				= 'http://www.technotecture.com/software/SimplyBibTeX/';
+$cfg['url'] 					= 'http://www.technotecture.com/software/SimplyBibTeX/';
 $cfg['helpfile']				= 'docs/help.inc';
+
 
 /* default data forlder settings */
 $cfg['library']		= "data";

@@ -27,26 +27,16 @@
 		</div>
 		<div class="item_menu">
 			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | 
-			<span onclick="javascript:toggle('comments_<?=$number?>')">Comment</span> | 
 			<span onclick="javascript:toggle('edit_<?=$number?>')">Edit</span>
 		</div>
 
-		
-		<![CDATA[
-		<div id="comments_<?=$number?>" class="hidden">
-			<div class="comment">
-			Not yet implemented!
-			</div>
-		</div>
-		]]>
 		<div id="edit_<?=$number?>" class="hidden">
 		
-			Line : <?=$linebegin?>-<?=$lineend?> in <?=$db?>
 			<form class="item_edit" action="include/commit.php" method="post">
 				
 				
-				<input type="hidden" name="linebegin" value="<?=$linebegin-1?>" />
-				<input type="hidden" name="lineend" value="<?=$lineend-1?>" />
+				<input type="hidden" name="linebegin" value="<?=$linebegin?>" />
+				<input type="hidden" name="lineend" value="<?=$lineend?>" />
 				<input type="hidden" name="command" value="update_item" />
 				<input type="hidden" name="db" value="<?=$db?>" />
 				
