@@ -35,7 +35,8 @@ function get_file_form($current)
 {
 	global $cfg;
 
-	$menu = '<select class="formitem" name="db" size="1" onchange="javascript:document.filelist.submit();">';
+	$menu  = '<form id="filelist" name="filelist" action="'.$_SERVER['PHP_SELF'].'" method="get">';
+	$menu .= '<select class="formitem" name="db" size="1" onchange="javascript:document.filelist.submit();">';
 
 	$directories = explode(',',$cfg['libraries']);
 
@@ -58,7 +59,7 @@ function get_file_form($current)
 		
 	};
 
-	$menu .= '</select>';	
+	$menu .= '</select></form>';	
 	return $menu;
 }
 

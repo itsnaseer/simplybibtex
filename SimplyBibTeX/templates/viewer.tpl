@@ -128,9 +128,10 @@
 				background-color: #fee;
 				padding:1em;
 			}
-			#filelist select {
+			#filelist {
 				border:0;
 				display:inline;
+				float:right;
 			}
 			.item_menu {
 				background-color: #999;
