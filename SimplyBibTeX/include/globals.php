@@ -12,7 +12,7 @@
 /* credits and internal versioning */
 $cfg['major'] 					= '0';
 $cfg['minor'] 					= '1';
-$cfg['build'] 					= '2';
+$cfg['build'] 					= '3';
 
 /* version */
 $cfg['version'] 				= "$cfg[major].$cfg[minor].$cfg[build]";

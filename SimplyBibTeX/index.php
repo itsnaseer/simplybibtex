@@ -14,6 +14,7 @@ require_once('include/bibtex.php');
 require_once('include/view.php');
 require_once('include/globals.php');
 require_once('include/admin.php');
+require_once('include/functions.php');
 
 $admin = new Admin();
 
@@ -21,24 +22,6 @@ if (!$admin->isInstalled()) {
 
 	$admin->doInstall();
 } else {
-
-
-
-
-function get_post($name,$default)
-{
-	if (isset($_POST[$name]))
-		return $_POST[$name];
-	return $default;
-};
-
-function get_get($name,$default)
-{
-	if (isset($_GET[$name]))
-		return $_GET[$name];
-	
-	return $default;		
-};
 
 /* generates a form to change the BibTeX file */
 function get_file_form($current)
