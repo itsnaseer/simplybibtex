@@ -24,11 +24,20 @@
 			<br/>
 		</div>
 		<div class="item_menu">
-			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | <span onclick="javascript:toggle('comments_<?=$number?>')">Comment</span>
+			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | 
+			<span onclick="javascript:toggle('comments_<?=$number?>')">Comment</span> | 
+			<span onclick="javascript:toggle('edit_<?=$number?>')">Edit</span>
 		</div>
 		<div id="comments_<?=$number?>" class="hidden">
 			<div class="comment">
 			Not yet implemented!
+			</div>
+		</div>
+		<div id="edit_<?=$number?>" class="hidden">
+			<div class="comment">
+			<code>
+			<?=$raw?>
+			</code>
 			</div>
 		</div>
 		

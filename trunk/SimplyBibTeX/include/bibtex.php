@@ -67,7 +67,7 @@ function parse() {
 		
 		$line = trim($line);
 
-		$raw_line = $line;
+		$raw_line = $line + '\n';
 		
 		$line=str_replace("'","`",$line);
 		$seg=str_replace("\"","`",$line);
@@ -203,8 +203,6 @@ function parse() {
 			$this->set($template,'address',		$i,"",$encode,$trans);
 			$this->set($template,'raw',			$i,"",$encode,$trans);
 			$this->set($template,'title',		$i,"",$encode,$trans);
-			
-			
 
 			$template->make();
 
