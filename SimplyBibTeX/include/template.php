@@ -1,13 +1,14 @@
 <?php
-/*
-    An extremely simple template system that uses either
-    <?php echo $var; ?>
-    or
-    <?=$var?>
-    value placeholders.
-
-	http://www.stargeek.com/scripts.php?script=10&cat=display
-*/
+// ---------------------------------------------------------------------------
+// SimplyBibTeX - simple PHP BibTeX viewer
+// ---------------------------------------------------------------------------
+// Module			: template engine
+// Description		: implements a very simple templating
+// Author			: Hartmut Seichter
+// Acknowledgement	: http://www.stargeek.com/scripts.php?script=10&cat=display
+// License			: GPL
+// CVS				: $Id$
+// ---------------------------------------------------------------------------
     class Template
     {
         var $filename;

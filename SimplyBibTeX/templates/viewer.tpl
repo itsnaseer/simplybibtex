@@ -17,7 +17,7 @@
 				margin:0.2em;
 			}
 			.item {
-				font: normal 9pt Helvetica, Arial, Verdana;
+				font: normal 9pt Verdana, "Lucida Grande", Tahoma, Helvetica;
 				padding: 1em;
 				border-bottom: 1px #CCCCCC solid;
 			}
@@ -27,11 +27,15 @@
 			.even {
 				background-color: #ddd;
 			}
+			#menu {
+				background-color: #e33;
+				padding:0.5em;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="header">
-			Current Database: <?=$database?>
+
 		</div>
 		<div id="menu">
 			<?=$menu?>

@@ -1,8 +1,12 @@
 <?php
 // ---------------------------------------------------------------------------
-// Author: 			Hartmut Seichter
-// Purpose:			BibTeX parser
-// 
+// SimplyBibTeX - simple PHP BibTeX viewer
+// ---------------------------------------------------------------------------
+// Module		: viewer class
+// Description	: wrapps the rendering and templating
+// Author		: Hartmut Seichter
+// License		: GPL
+// CVS			: $Id$
 // ---------------------------------------------------------------------------
 
 require_once('bibtex.php');
