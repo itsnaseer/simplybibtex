@@ -18,10 +18,7 @@ require_once('include/functions.php');
 
 $admin = new Admin();
 
-
 $cache_extension = $_SERVER['REQUEST_URI'];
-
-// echo $cache_extension;
 
 if (!$admin->isInstalled()) {
 
@@ -38,7 +35,7 @@ function get_file_form($current)
 
 	$directory = $cfg['library'];
 
-	foreach (glob("$cfg[library]/*.bib") as $file) {
+	foreach (glob_func("$cfg[library]","*.bib") as $file) {
 	
 		$sel_html = ($file == $current) ? 'selected="selected"' : '';				
 		$menu .= '<option value="' . $file . '" ' . $sel_html . '>' . $file . '</option>'; 
