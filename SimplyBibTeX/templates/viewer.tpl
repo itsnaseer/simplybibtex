@@ -77,6 +77,9 @@
 				color: white;
 				padding: 1em;
 				background-color: #e33;
+				border-bottom: 1px solid #d33;
+				border-top: 1px solid #f33;
+
 			}
 			#content {
 				clear:both;
@@ -103,7 +106,9 @@
 				color: white;
 				padding:0.75em;
 				clear:both;
-				border-bottom: 
+				border-bottom: 1px solid #333;
+				border-top: 1px solid #999;
+				cursor: pointer;
 			}
 			#menu a {
 				font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;

@@ -5,11 +5,6 @@
 	<?=$author?>, (<?=$year?>) <i><?=$title?>, <?=$journal?></i>
 	</div>
 	<div id="notes_<?=$number?>" class="hidden">
-		<div class="item_menu">
-			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | 
-			<span onclick="javascript:toggle('comments_<?=$number?>')">Comment</span> | 
-			<span onclick="javascript:toggle('edit_<?=$number?>')">Edit</span>
-		</div>
 
 		<div class="item_extended">
 			<b>Author:</b>&nbsp;<?=$author?>
@@ -30,6 +25,13 @@
 			<br/>
 			<b>Notes:</b>&nbsp;<?=$notes?>
 		</div>
+		<div class="item_menu">
+			<a href="<?=$link?>?id=<?=$number?>&amp;db=<?=$db?>">Backlink</a> | 
+			<span onclick="javascript:toggle('comments_<?=$number?>')">Comment</span> | 
+			<span onclick="javascript:toggle('edit_<?=$number?>')">Edit</span>
+		</div>
+
+		
 		<![CDATA[
 		<div id="comments_<?=$number?>" class="hidden">
 			<div class="comment">
@@ -41,15 +43,21 @@
 		
 			Line : <?=$linebegin?>-<?=$lineend?> in <?=$db?>
 			<form class="item_edit" action="include/commit.php" method="post">
-
+				
+				
 				<input type="hidden" name="linebegin" value="<?=$linebegin-1?>" />
 				<input type="hidden" name="lineend" value="<?=$lineend-1?>" />
 				<input type="hidden" name="command" value="update_item" />
 				<input type="hidden" name="db" value="<?=$db?>" />
-				<input type="submit" value="Update" />
-				<input type="reset" value="Clear" />
-
-				<textarea type="text" rows="20" cols="60" name="item"><?=$raw?></textarea>
+				
+				<fieldset>
+					<legend>BibTeX Entry</legend>
+					<input type="submit" value="Update" />
+					<input type="reset" value="Clear" />
+					<textarea type="text" rows="20" cols="70" name="item"><?=$raw?></textarea>
+				</fieldset>
+				
+				
 			</form>
 		</div>		
 

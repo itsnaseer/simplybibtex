@@ -24,7 +24,7 @@ $cfg['config']		= "$cfg[library]/index.meta";
 
 
 /* change that if you do not want to include uploaded libaries */
-$cfg['libraries'] = "$cfg[library],$cfg[uploads]";
+$cfg['libraries'] = "$cfg[library]";
 
 
 ?>
