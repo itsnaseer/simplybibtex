@@ -28,6 +28,7 @@
 			<span onclick="javascript:toggle('comments_<?=$number?>')">Comment</span> | 
 			<span onclick="javascript:toggle('edit_<?=$number?>')">Edit</span>
 		</div>
+		<![CDATA[
 		<div id="comments_<?=$number?>" class="hidden">
 			<div class="comment">
 			Not yet implemented!
@@ -40,7 +41,7 @@
 			</code>
 			</div>
 		</div>
-		
+		]]>		
 
 	</div>
 </div>
