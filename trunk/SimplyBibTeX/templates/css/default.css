@@ -1,0 +1,144 @@
+/* CSS Document */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+	margin: 1em 0;
+	padding: 0;
+	text-align: center;	
+}
+h2 {
+	font: bold 9pt "Lucida Grande", Arial, Helvetica, sans-serif;
+}
+h3 {
+	font: bold 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+}
+a {
+	color: black;
+}
+	
+.hidden {
+	display: none;
+}
+.visible {
+	display: block;
+}
+.extended {
+	padding: 0.5em;
+	margin:0.2em;
+}
+.item {				
+	padding:0.5em;
+	font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+}
+.odd {
+	border-bottom: #aaa;
+}
+.even {
+	border-bottom: #eee;
+}
+.formitem {
+	font: normal 8pt "Lucida Grande", Arial, Helvetica, sans-serif;
+	border:0;
+}
+#header {
+	font: bold 12pt "Lucida Grande", Arial, Helvetica, sans-serif;
+	padding: 1em;
+}
+#content {								
+	clear:both;
+}
+
+#container {
+	width: 600px;
+	margin: 0px auto;
+	padding:1em;			
+	text-align: left;
+}
+#footer {
+	padding: 0.5em;
+}		
+#footer a {
+}
+
+#menu {
+	width:100%;
+	padding:0.75em;
+	clear:both;
+	border-bottom: 1px solid #333;
+	border-top: 1px solid #999;
+	cursor: pointer;
+}
+#menu a {
+}
+
+#menu form {
+	vertical-align: top;
+	margin: 0;
+}
+#help {
+}
+
+#additemform {
+	padding:1em;
+}
+
+#metaform {
+
+	padding:1em;
+}
+#searchform {
+
+	padding:1em;
+}
+#uploadform {
+
+	padding:1em;
+}
+#filelist {
+	border:0;
+	display:inline;
+	float:right;
+}
+.item_short {
+	padding:0.3em;
+}
+
+.item_short:hover {
+	background-color: #aaa;
+}
+
+.item_short_expand {
+	padding:0.3em;
+	color: #aaa;
+}
+
+.item_menu {
+	cursor: pointer;
+	padding: 0.5em;
+}	
+
+.link {
+	padding:0.5em;				
+	text-decoration : none;	
+}
+
+.item_menu a:hover, .link:hover {
+	background-color: #999;
+	color: white;
+}
+.item_menu a {
+	padding:0.5em;				
+	text-decoration : none;				
+}
+.item_extended {
+	background-color: #efe;
+	color: black;
+	border: 1px solid #999;
+	padding:0.5em;
+}
+
+item_

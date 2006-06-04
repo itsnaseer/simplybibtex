@@ -1,10 +1,7 @@
 <?php
 /*
     An extremely simple template system that uses either
-    <?php echo $var; ?>
-    or
-    <?=$var?>
-    value placeholders.
+    
 */
     class Template
     {
