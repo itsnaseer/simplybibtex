@@ -1,0 +1,1 @@
+SimplyBibTeX is a PHP web application to render BibTeX bibliographies in different representations. Your coworkers can subscribe to RSS and Atom feeds and get notified if something changes in the particular database. It supports unlimited databases, stores metadata and is using an internal templating mechanism to change the user interface.
